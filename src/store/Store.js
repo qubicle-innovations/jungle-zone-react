@@ -1,20 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit';
-import NotesReducer from './apps/notes/NotesSlice';
-import CustomizerReducer from './customizer/CustomizerSlice';
-import ChatsReducer from './apps/chat/ChatSlice';
-import ContactsReducer from './apps/contacts/ContactSlice';
-import EmailReducer from './apps/email/EmailSlice';
-import TicketReducer from './apps/ticket/TicketSlice';
+import { configureStore } from "@reduxjs/toolkit"
+import createSagaMiddleware from "redux-saga"
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 
-export const store = configureStore({
-  reducer: {
-    customizer: CustomizerReducer,
-    notesReducer: NotesReducer,
-    chatReducer: ChatsReducer,
-    contactsReducer: ContactsReducer,
-    emailReducer: EmailReducer,
-    ticketReducer: TicketReducer,
-  },
-});
+import rootReducer from "./reducers"
+import rootSaga from "./sagas"
 
-export default store;
+const persistConfig = {
+    key: 'root',
+    storage,
+  }
+
+const sagaMiddleware = createSagaMiddleware()
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+export const store = configureStore({ reducer: persistedReducer,middleware:[sagaMiddleware] })
+sagaMiddleware.run(rootSaga)
+
+// export default store
+export const persistor = persistStore(store)

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Label, FormGroup, Container, Row, Col, Card, CardBody } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import AuthLogo from "../../layouts/logo/AuthLogo";
+import { getLoginFetch, resetData } from '../../store/auth/AuthSlice';
+import AuthLogo from '../../layouts/logo/AuthLogo';
 import { ReactComponent as LeftBg } from '../../assets/images/bg/login-bgleft.svg';
 import { ReactComponent as RightBg } from '../../assets/images/bg/login-bg-right.svg';
 
 const LoginFormik = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialValues = {
     email: '',
@@ -21,6 +24,21 @@ const LoginFormik = () => {
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
   });
+
+  const onSubmit = (values) => {
+    dispatch(getLoginFetch({ values, navigate }));
+  };
+
+  const apiError = useSelector((state) => state.login);
+
+  useEffect(() => {
+    if (apiError && apiError.data && apiError.data.error) {
+      // toast.error("Invalid credentials!", {
+      //   position: toast.POSITION.TOP_RIGHT,
+      // });
+      dispatch(resetData());
+    }
+  }, [apiError]);
 
   return (
     <div className="loginBox">
@@ -36,9 +54,7 @@ const LoginFormik = () => {
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchema}
-                  onSubmit={() => {
-                    navigate('/home');
-                  }}
+                  onSubmit={onSubmit}
                   render={({ errors, touched }) => (
                     <Form>
                       <FormGroup>

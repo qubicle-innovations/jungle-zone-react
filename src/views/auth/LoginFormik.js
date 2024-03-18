@@ -30,7 +30,7 @@ const LoginFormik = () => {
   };
 
   const apiError = useSelector((state) => state.login);
-
+console.log(apiError);
   useEffect(() => {
     if (apiError && apiError.data && apiError.data.error) {
       // toast.error("Invalid credentials!", {

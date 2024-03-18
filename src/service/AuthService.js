@@ -1,0 +1,13 @@
+import axios from 'axios';
+
+const BASE_URL = `${process.env.REACT_APP_API_BASE_URL}`;
+
+const loginData = async (endpoint, payload) => {
+    try {
+      const response = await axios.post(`${BASE_URL}${endpoint}`, payload);
+      return { response: response.data, msg: "success" };
+    } catch (error) {
+      throw new Error('Error posting data');
+    }
+  };
+export default loginData;

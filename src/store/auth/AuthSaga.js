@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { loginData } from '../../service/Service';
+import  loginData from '../../service/AuthService';
 import { getLoginSuccess, getLoginError } from './AuthSlice';
 // import axios from "axios";
 

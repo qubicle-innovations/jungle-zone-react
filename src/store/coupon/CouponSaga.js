@@ -12,7 +12,6 @@ import {
 } from "./CouponSlice";
 
 function* createCoupon(action) {
-  console.log(action.payload);
   const data = yield call(postData, 'admin/coupon', action.payload);
   if (data.msg === "success") {
     yield put(createCouponSuccess(data.response));

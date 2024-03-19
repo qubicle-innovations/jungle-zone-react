@@ -12,7 +12,6 @@ export const fetchData = async (endpoint) => {
 };
 
 export const postData = async (endpoint, data) => {
-  console.log(axiosInstance,endpoint, data);
   try {
     const response = await axiosInstance.post(`${endpoint}`, data);
     return response.data;

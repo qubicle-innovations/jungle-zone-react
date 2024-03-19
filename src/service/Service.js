@@ -1,25 +1,4 @@
-import axios from 'axios';
-
-import { store } from '../store/Store';
-
-const BASE_URL = `${process.env.REACT_APP_API_BASE_URL}`;
-
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-});
-
-axiosInstance.interceptors.request.use((config) => {
-  const state = store.getState();
-  const token = `Bearer${state.login.logData.user.token}`;
-  const headers = {
-    Authorization: token,
-    // Other headers can be added similarly
-  };
-  config.params = config.params || {};
-  config.headers = headers;
-
-  return config;
-});
+import axiosInstance from "./ApiHelper";
 
 // Example service functions
 export const fetchData = async (endpoint) => {
@@ -27,15 +6,18 @@ export const fetchData = async (endpoint) => {
     const response = await axiosInstance.get(`${endpoint}`);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Error fetching data');
   }
 };
 
 export const postData = async (endpoint, data) => {
+  console.log(axiosInstance,endpoint, data);
   try {
-    const response = await axios.post(`${endpoint}`, data);
+    const response = await axiosInstance.post(`${endpoint}`, data);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Error posting data');
   }
 };

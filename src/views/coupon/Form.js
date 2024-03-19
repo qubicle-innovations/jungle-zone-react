@@ -2,11 +2,15 @@ import React from 'react';
 
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { Row, Col, FormGroup, Label, Input, Card, CardBody, Button } from 'reactstrap';
+import { useDispatch } from 'react-redux';
+import { Row, Col, FormGroup, Label, Card, CardBody, Button } from 'reactstrap';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import ComponentCard from '../../components/ComponentCard';
+import { createCoupon } from '../../store/coupon/CouponSlice';
 
 const CouponForm = ({ setPageType }) => {
+  const dispatch = useDispatch();
   const {
     register,
     formState: { errors },
@@ -31,7 +35,7 @@ const CouponForm = ({ setPageType }) => {
     delayError: undefined,
   });
   const submitForm = async (data) => {
-    console.log(data);
+    dispatch(createCoupon(data));
   };
 
   return (
@@ -48,12 +52,13 @@ const CouponForm = ({ setPageType }) => {
               <Row>
                 <Label sm="2">Title</Label>
                 <Col sm="10">
-                  <Input
+                  <input
+                    className="form-control"
                     type="text"
                     defaultValue=""
                     placeholder="Title"
                     {...register('title', {
-                      // required: 'Please enter title.',
+                      required: 'Please enter title.',
                     })}
                   />
                   <ErrorMessage
@@ -68,14 +73,15 @@ const CouponForm = ({ setPageType }) => {
               <Row>
                 <Label sm="2">Description</Label>
                 <Col sm="10">
-                  <Input
-                    type="textarea"
+                  <textarea
+                    className="form-control"
                     rows="5"
                     defaultValue=""
                     {...register('description', {
-                      // required: 'Please enter description.',
+                      required: 'Please enter description.',
                     })}
-                  />
+                  >
+                  </textarea>
                   <ErrorMessage
                     errors={errors}
                     name="description"
@@ -88,11 +94,12 @@ const CouponForm = ({ setPageType }) => {
               <Row>
                 <Label sm="2">Coupon Image</Label>
                 <Col sm="10">
-                  <Input
+                  <input
+                    className="form-control"
                     type="file"
                     placeholder=""
                     {...register('image', {
-                      // required: 'Please upload coupon image.',
+                      required: 'Please upload coupon image.',
                     })}
                   />
                   <ErrorMessage
@@ -107,11 +114,13 @@ const CouponForm = ({ setPageType }) => {
               <Row>
                 <Label sm="2">Start Date</Label>
                 <Col sm="10">
-                  <Input
+                  <input
+                    className="form-control"
                     type="date"
+                    defaultValue={moment().format('YYYY-MM-DD')}
                     placeholder="Start Date"
                     {...register('start_date', {
-                      // required: 'Please enter start date.',
+                      required: 'Please enter start date.',
                     })}
                   />
                   <ErrorMessage
@@ -126,11 +135,13 @@ const CouponForm = ({ setPageType }) => {
               <Row>
                 <Label sm="2">End Date</Label>
                 <Col sm="10">
-                  <Input
+                  <input
+                    className="form-control"
                     type="date"
+                    defaultValue={moment().format('YYYY-MM-DD')}
                     placeholder="End Date"
                     {...register('end_date', {
-                      // required: 'Please enter end date.',
+                      required: 'Please enter end date.',
                     })}
                   />
                   <ErrorMessage
@@ -145,12 +156,13 @@ const CouponForm = ({ setPageType }) => {
               <Row>
                 <Label sm="2">No.of coupons to generate</Label>
                 <Col sm="10">
-                  <Input
+                  <input
+                    className="form-control"
                     type="number"
                     defaultValue=""
                     placeholder="No.of coupons to generate"
                     {...register('total_no', {
-                      // required: 'Please enter no.of coupons to generate.',
+                      required: 'Please enter no.of coupons to generate.',
                     })}
                   />
                   <ErrorMessage

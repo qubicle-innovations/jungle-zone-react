@@ -34,8 +34,18 @@ const CouponForm = ({ setPageType }) => {
     shouldUseNativeValidation: false,
     delayError: undefined,
   });
+  
   const submitForm = async (data) => {
-    dispatch(createCoupon(data));
+    const formData = new FormData();
+
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('start_date', data.start_date);
+    formData.append('end_date', data.end_date);
+    formData.append('total_no', data.total_no);
+    formData.append('image', data.image[0]);
+
+    dispatch(createCoupon(formData));
   };
 
   return (
@@ -80,8 +90,7 @@ const CouponForm = ({ setPageType }) => {
                     {...register('description', {
                       required: 'Please enter description.',
                     })}
-                  >
-                  </textarea>
+                  ></textarea>
                   <ErrorMessage
                     errors={errors}
                     name="description"

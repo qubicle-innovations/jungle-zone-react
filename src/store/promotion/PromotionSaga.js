@@ -1,50 +1,30 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { fetchData, postData } from '../../service/Service';
 import {
-  createPromotionSuccess,
-  createPromotionError,
-  updatePromotionSuccess,
-  updatePromotionError,
-  deletePromotionSuccess,
-  deletePromotionError,
-  listPromotionSuccess,
-  listPromotionError,
+  createPromotionAction,
+  updatePromotionAction,
+  deletePromotionAction,
+  listPromotionAction,
 } from './PromotionSlice';
 
 function* createPromotion(action) {
   const data = yield call(postData, 'admin/promotion', action.payload);
-  if (data.msg === 'success') {
-    yield put(createPromotionSuccess(data.response));
-  } else {
-    yield put(createPromotionError(data.response));
-  }
+  yield put(createPromotionAction(data));
 }
 
 function* updatePromotion(action) {
   const data = yield call(postData, action.payload);
-  if (data.msg === 'success') {
-    yield put(updatePromotionSuccess(data.response));
-  } else {
-    yield put(updatePromotionError(data.response));
-  }
+  yield put(updatePromotionAction(data));
 }
 
 function* deletePromotion(action) {
   const data = yield call(postData, action.payload);
-  if (data.msg === 'success') {
-    yield put(deletePromotionSuccess(data.response));
-  } else {
-    yield put(deletePromotionError(data.response));
-  }
+  yield put(deletePromotionAction(data));
 }
 
 function* listPromotion(action) {
   const data = yield call(fetchData, action.payload);
-  if (data.msg === 'success') {
-    yield put(listPromotionSuccess(data.response));
-  } else {
-    yield put(listPromotionError(data.response));
-  }
+  yield put(listPromotionAction(data));
 }
 
 function* promotionSaga() {

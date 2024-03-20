@@ -4,94 +4,57 @@ export const promotionSlice = createSlice({
   name: "promotion",
   initialState: {
     createPromotionStatus: {},
-    createPromotionStatusError: {},
-    promotionList: {},
-    promotionListError: {},
+    listPromotionStatus: {},
     updatePromotionStatus: {},
-    updatePromotionStatusError: {},
-    deletePromotionError: {},
-    deletePromotionSuccess: {},
+    deletePromotionStatus: {},
     paramData:{},
   },
   reducers: {
     createPromotion: (state, action) => {
       state.createPromotionStatus = {};
-      state.createPromotionStatusError = {};
       state.paramData=action.payload;
     },
-    createPromotionSuccess: (state, action) => {
+    createPromotionAction: (state, action) => {
       state.createPromotionStatus = action.payload;
-      state.createPromotionStatusError = {};
-    },
-    createPromotionError: (state, action) => {
-      state.createPromotionStatusError = action.payload;
-      state.createPromotionStatus = {};
     },
     updatePromotion: (state, action) => {
       state.updatePromotionStatus = {};
-      state.updatePromotionStatusError = {};
       state.paramData=action.payload;
     },
-    updatePromotionSuccess: (state, action) => {
+    updatePromotionAction: (state, action) => {
       state.updatePromotionStatus = action.payload;
-      state.updatePromotionStatusError = {};
-    },
-    updatePromotionError: (state, action) => {
-      state.updatePromotionStatus = {};
-      state.updatePromotionStatusError = action.payload;
     },
     deletePromotion: (state, action) => {
-      state.deletePromotionError = {};
-      state.deletePromotionSuccess = {};
+      state.deletePromotionStatus = {};
       state.paramData=action.payload;
     },
-    deletePromotionSuccess: (state, action) => {
-      state.deletePromotionError = {};
-      state.deletePromotionSuccess = action.payload;
-    },
-    deletePromotionError: (state, action) => {
-      state.deletePromotionError = action.payload;
-      state.deletePromotionSuccess = {};
+    deletePromotionAction: (state, action) => {
+      state.deletePromotionStatus = action.payload;
     },
     listPromotion: (state) => {
-      state.promotionList = {};
+      state.listPromotionStatus = {};
     },
-    listPromotionSuccess: (state, action) => {
-      state.promotionList = action.payload;
-      state.promotionError = {};
-    },
-    listPromotionError: (state, action) => {
-      state.promotionError = action.payload;
-      state.promotionList = {};
+    listPromotionAction: (state, action) => {
+      state.listPromotionStatus = action.payload;
     },
     resetFunction: (state) => {
       state.createPromotionStatus = {};
-      state.createPromotionStatusError = {};
-      state.promotionList = {};
-      state.promotionListError = {};
+      state.listPromotionStatus = {};
       state.updatePromotionStatus = {};
-      state.updatePromotionStatusError = {};
-      state.deletePromotionError = {};
-      state.deletePromotionSuccess = {};
-      state.promotionByVendorList = {};
-      state.promotionByVendorError = {};
+      state.deletePromotionStatus = {};
     },
   },
 });
 
 export const {
   createPromotion,
-  createPromotionSuccess,
-  createPromotionError,
+  createPromotionAction,
   updatePromotion,
-  updatePromotionSuccess,
-  updatePromotionError,
+  updatePromotionAction,
   deletePromotion,
-  deletePromotionSuccess,
-  deletePromotionError,
+  deletePromotionAction,
   listPromotion,
-  listPromotionSuccess,
-  listPromotionError,
+  listPromotionAction,
   resetFunction,
 } = promotionSlice.actions;
 export default promotionSlice.reducer;

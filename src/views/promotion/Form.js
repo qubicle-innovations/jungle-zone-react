@@ -34,7 +34,13 @@ const PromotionForm = ({ setPageType }) => {
     delayError: undefined,
   });
   const submitForm = async (data) => {
-    dispatch(createPromotion(data));
+    const formData = new FormData();
+
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('image', data.image[0]);
+
+    dispatch(createPromotion(formData));
   };
   return (
     <Row>

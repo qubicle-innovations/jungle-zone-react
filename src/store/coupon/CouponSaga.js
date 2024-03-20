@@ -1,50 +1,30 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { fetchData, postData } from '../../service/Service';
 import {
-  createCouponSuccess,
-  createCouponError,
-  updateCouponSuccess,
-  updateCouponError,
-  deleteCouponSuccess,
-  deleteCouponError,
-  listCouponSuccess,
-  listCouponError,
+  createCouponAction,
+  updateCouponAction,
+  deleteCouponAction,
+  listCouponAction,
 } from './CouponSlice';
 
 function* createCoupon(action) {
   const data = yield call(postData, 'admin/coupon', action.payload);
-  if (data.msg === 'success') {
-    yield put(createCouponSuccess(data.response));
-  } else {
-    yield put(createCouponError(data.response));
-  }
+  yield put(createCouponAction(data));
 }
 
 function* updateCoupon(action) {
   const data = yield call(postData, action.payload);
-  if (data.msg === 'success') {
-    yield put(updateCouponSuccess(data.response));
-  } else {
-    yield put(updateCouponError(data.response));
-  }
+  yield put(updateCouponAction(data));
 }
 
 function* deleteCoupon(action) {
   const data = yield call(postData, action.payload);
-  if (data.msg === 'success') {
-    yield put(deleteCouponSuccess(data.response));
-  } else {
-    yield put(deleteCouponError(data.response));
-  }
+  yield put(deleteCouponAction(data));
 }
 
 function* listCoupon(action) {
   const data = yield call(fetchData, action.payload);
-  if (data.msg === 'success') {
-    yield put(listCouponSuccess(data.response));
-  } else {
-    yield put(listCouponError(data.response));
-  }
+  yield put(listCouponAction(data));
 }
 
 function* couponSaga() {

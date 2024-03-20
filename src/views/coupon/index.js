@@ -9,35 +9,20 @@ import CouponList from './List';
 const CouponIndex = () => {
   const [pageType, setPageType] = useState('list');
   const dispatch = useDispatch();
-  const createSuccess = useSelector((state) => state.coupon.createCouponStatus);
-  const createError = useSelector((state) => state.coupon.createCouponStatusError);
-
+  const createStatus = useSelector((state) => state.coupon.createCouponStatus);
   useEffect(() => {
     let msg = '';
-    if (createSuccess && createSuccess.success === true) {
-      msg = createSuccess.response;
+    if (createStatus) {
+      if (createStatus.success === true) {
+        msg = createStatus.response;
+        toast(msg);
+        dispatch(resetFunction());
+        setPageType('list');
+      } else if (createStatus.success === false) {
+        toast.error(msg);
+      }
     }
-    if (msg !== '') {
-      toast(msg, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      dispatch(resetFunction());
-    }
-    setPageType('list');
-  }, [createSuccess, dispatch]);
-
-  useEffect(() => {
-    let msg = '';
-    if (createError && createError.data && createError.data.success === false) {
-      msg = createError.data.response;
-    }
-    if (msg !== '') {
-      toast.error(msg, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      dispatch(resetFunction());
-    }
-  }, [createError, dispatch]);
+  }, [createStatus, dispatch]);
 
   const renderPages = () => {
     switch (pageType) {

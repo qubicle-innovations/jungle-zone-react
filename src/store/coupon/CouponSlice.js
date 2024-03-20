@@ -4,94 +4,57 @@ export const couponSlice = createSlice({
   name: "coupon",
   initialState: {
     createCouponStatus: {},
-    createCouponStatusError: {},
-    couponList: {},
-    couponListError: {},
+    listCouponStatus: {},
     updateCouponStatus: {},
-    updateCouponStatusError: {},
-    deleteCouponError: {},
-    deleteCouponSuccess: {},
+    deleteCouponStatus: {},
     paramData:{},
   },
   reducers: {
     createCoupon: (state, action) => {
       state.createCouponStatus = {};
-      state.createCouponStatusError = {};
       state.paramData=action.payload;
     },
-    createCouponSuccess: (state, action) => {
+    createCouponAction: (state, action) => {
       state.createCouponStatus = action.payload;
-      state.createCouponStatusError = {};
-    },
-    createCouponError: (state, action) => {
-      state.createCouponStatusError = action.payload;
-      state.createCouponStatus = {};
     },
     updateCoupon: (state, action) => {
       state.updateCouponStatus = {};
-      state.updateCouponStatusError = {};
       state.paramData=action.payload;
     },
-    updateCouponSuccess: (state, action) => {
+    updateCouponAction: (state, action) => {
       state.updateCouponStatus = action.payload;
-      state.updateCouponStatusError = {};
-    },
-    updateCouponError: (state, action) => {
-      state.updateCouponStatus = {};
-      state.updateCouponStatusError = action.payload;
     },
     deleteCoupon: (state, action) => {
-      state.deleteCouponError = {};
-      state.deleteCouponSuccess = {};
+      state.deleteCouponStatus = {};
       state.paramData=action.payload;
     },
-    deleteCouponSuccess: (state, action) => {
-      state.deleteCouponError = {};
-      state.deleteCouponSuccess = action.payload;
-    },
-    deleteCouponError: (state, action) => {
-      state.deleteCouponError = action.payload;
-      state.deleteCouponSuccess = {};
+    deleteCouponAction: (state, action) => {
+      state.deleteCouponStatus = action.payload;
     },
     listCoupon: (state) => {
-      state.couponList = {};
+      state.listCouponStatus = {};
     },
-    listCouponSuccess: (state, action) => {
-      state.couponList = action.payload;
-      state.couponError = {};
-    },
-    listCouponError: (state, action) => {
-      state.couponError = action.payload;
-      state.couponList = {};
+    listCouponAction: (state, action) => {
+      state.listCouponStatus = action.payload;
     },
     resetFunction: (state) => {
       state.createCouponStatus = {};
-      state.createCouponStatusError = {};
-      state.couponList = {};
-      state.couponListError = {};
+      state.listCouponStatus = {};
       state.updateCouponStatus = {};
-      state.updateCouponStatusError = {};
-      state.deleteCouponError = {};
-      state.deleteCouponSuccess = {};
-      state.couponByVendorList = {};
-      state.couponByVendorError = {};
+      state.deleteCouponStatus = {};
     },
   },
 });
 
 export const {
   createCoupon,
-  createCouponSuccess,
-  createCouponError,
+  createCouponAction,
   updateCoupon,
-  updateCouponSuccess,
-  updateCouponError,
+  updateCouponAction,
   deleteCoupon,
-  deleteCouponSuccess,
-  deleteCouponError,
+  deleteCouponAction,
   listCoupon,
-  listCouponSuccess,
-  listCouponError,
+  listCouponAction,
   resetFunction,
 } = couponSlice.actions;
 export default couponSlice.reducer;

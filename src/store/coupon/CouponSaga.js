@@ -22,8 +22,8 @@ function* deleteCoupon(action) {
   yield put(deleteCouponAction(data));
 }
 
-function* listCoupon(action) {
-  const data = yield call(fetchData, action.payload);
+function* listCoupon() {
+  const data = yield call(fetchData, 'admin/coupon');
   yield put(listCouponAction(data));
 }
 

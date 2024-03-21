@@ -2,7 +2,7 @@
   background-color: #ea0029 !important;
 }
 
-.btn-info{
+.btn-info {
   background-color: #0075c9 !important;
 }
 
@@ -11,6 +11,31 @@
 }
 
 .sidebarArea .sidebarBox.bg-white .activeLink .nav-link {
-    color: #ea0029 !important;
-    border-left: 3px solid #ea0029 !important;
+  color: #ea0029 !important;
+  border-left: 3px solid #ea0029 !important;
+}
+
+.pagination-div {
+  float: right;
+}
+
+.val-error {
+  color: #ea0029;
+}
+
+.icon-delete {
+  color: #ea0029;
+}
+
+.icon-edit {
+  color: #0075c9;
+}
+
+.icon-view {
+  color: #38d430;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-evenly;
 }

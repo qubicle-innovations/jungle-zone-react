@@ -21,4 +21,23 @@ export const postData = async (endpoint, data) => {
   }
 };
 
+export const putData = async (endpoint, data) => {
+  try {
+    const response = await axiosInstance.put(`${endpoint}`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error posting data');
+  }
+};
+export const deleteData = async (endpoint) => {
+  try {
+    const response = await axiosInstance.delete(`${endpoint}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error posting data');
+  }
+};
+
 // You can add more functions as needed

@@ -1,22 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table } from 'reactstrap';
 import * as Icon from 'react-feather';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import { DispatchContext } from '../../context/AppProvider';
 import ComponentCard from '../../components/ComponentCard';
 import CustomPagination from '../../components/CustomPagination';
-import { listCoupon } from '../../store/coupon/CouponSlice';
+import { listCoupon, deleteCoupon } from '../../store/coupon/CouponSlice';
 
 const CouponList = ({ setPageType }) => {
   const dispatch = useDispatch();
-
+  const contextDispatch = useContext(DispatchContext);
   const [currentPage, setCurrentPage] = useState(1);
 
   const listData = useSelector((state) => state.coupon.listCouponStatus);
+  const delteStatus = useSelector((state) => state.coupon.deleteCouponStatus);
 
   useEffect(() => {
     dispatch(listCoupon());
   }, [dispatch]);
+
+  useEffect(() => {
+    let msg = '';
+    if (delteStatus) {
+      if (delteStatus.success === true) {
+        msg = delteStatus.response;
+        toast(msg);
+      } else if (delteStatus.success === false) {
+        toast.error(msg);
+      }
+      dispatch(listCoupon());
+    }
+  }, [delteStatus, dispatch]);
 
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 10;
@@ -44,6 +61,18 @@ const CouponList = ({ setPageType }) => {
     setItemOffset(newOffset);
   };
 
+  const handleEditClick = (cpn) => {
+    contextDispatch({
+      type: 'coupon_edit',
+      payload: cpn,
+    });
+    setPageType('edit');
+  };
+
+  const handleDeleteClick = (id) => {
+    dispatch(deleteCoupon(id));
+  };
+
   return (
     <Row>
       <Col md="12">
@@ -58,6 +87,7 @@ const CouponList = ({ setPageType }) => {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
+                <th scope="col">Arabic Title</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
                 <th scope="col">Action</th>
@@ -71,18 +101,27 @@ const CouponList = ({ setPageType }) => {
                     <tr key={cpn.id}>
                       <th scope="row">{slCount}</th>
                       <td>{cpn.title}</td>
+                      <td>{cpn.title_ar}</td>
                       <td>{cpn.start_date}</td>
                       <td>{cpn.end_date}</td>
                       <td>
                         <div className="actions">
                           <span>
-                          <Icon.Edit className='icon-edit' />
+                            <Icon.Edit className="icon-edit" onClick={() => handleEditClick(cpn)} />
                           </span>
                           <span>
-                          <Icon.Eye className='icon-view' />
+                            <Icon.Eye className="icon-view" />
                           </span>
                           <span>
-                          <Icon.Trash className='icon-delete' />
+                            <Icon.Trash
+                              className="icon-delete"
+                              onClick={() => {
+                                // eslint-disable-next-line
+                                if (window.confirm('Delete the coupon?')) {
+                                  handleDeleteClick(cpn.id);
+                                }
+                              }}
+                            />
                           </span>
                         </div>
                       </td>

@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store/Store';
 import './assets/scss/custom.scss';
+import  {AppProvider} from './context/AppProvider';
 import App from './App';
 import './data';
 
@@ -15,9 +16,11 @@ const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AppProvider>
   </Provider>,
 );
 

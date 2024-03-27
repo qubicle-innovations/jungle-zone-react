@@ -3,12 +3,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Table } from 'reactstrap';
 import * as Icon from 'react-feather';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { DispatchContext } from '../../context/AppProvider';
 import ComponentCard from '../../components/ComponentCard';
 import CustomPagination from '../../components/CustomPagination';
-import { listCoupon, deleteCoupon } from '../../store/coupon/CouponSlice';
+import { listCoupon, deleteCoupon, resetFunction } from '../../store/coupon/CouponSlice';
 
 const CouponList = ({ setPageType }) => {
   const dispatch = useDispatch();
@@ -28,10 +29,11 @@ const CouponList = ({ setPageType }) => {
       if (delteStatus.success === true) {
         msg = delteStatus.response;
         toast(msg);
+        dispatch(resetFunction());
       } else if (delteStatus.success === false) {
         toast.error(msg);
+        dispatch(resetFunction());
       }
-      dispatch(listCoupon());
     }
   }, [delteStatus, dispatch]);
 
@@ -102,8 +104,8 @@ const CouponList = ({ setPageType }) => {
                       <th scope="row">{slCount}</th>
                       <td>{cpn.title}</td>
                       <td>{cpn.title_ar}</td>
-                      <td>{cpn.start_date}</td>
-                      <td>{cpn.end_date}</td>
+                      <td>{moment(cpn.start_date).format('DD-MM-YYYY')}</td>
+                      <td>{moment(cpn.end_date).format('DD-MM-YYYY')}</td>
                       <td>
                         <div className="actions">
                           <span>

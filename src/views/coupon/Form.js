@@ -7,7 +7,7 @@ import { Row, Col, FormGroup, Label, Card, CardBody, Button } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-// import moment from 'moment';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import ComponentCard from '../../components/ComponentCard';
 import { createCoupon, updateCoupon } from '../../store/coupon/CouponSlice';
@@ -40,8 +40,6 @@ const CouponForm = ({ setPageType }) => {
       description: Object.keys(editData).length > 0 ? editData.description : '',
       description_ar: Object.keys(editData).length > 0 ? editData.description_ar : '',
       image: Object.keys(editData).length > 0 ? editData.image : null,
-      start_date: new Date('yyyy-mm-dd'),
-      end_date: Object.keys(editData).length > 0 ? editData.end_date : new Date(),
       total_no: Object.keys(editData).length > 0 ? editData.total_no : '',
     },
     resolver: undefined,
@@ -79,8 +77,8 @@ const CouponForm = ({ setPageType }) => {
       formData.append('title_ar', data.title_ar);
       formData.append('description', data.description);
       formData.append('description_ar', data.description_ar);
-      formData.append('start_date', startDate);
-      formData.append('end_date', endDate);
+      formData.append('start_date', moment(startDate).format('YYYY-MM-DD'));
+      formData.append('end_date', moment(endDate).format('YYYY-MM-DD'));
       formData.append('total_no', data.total_no);
       formData.append('image', data.image[0]);
       if (Object.keys(editData).length === 0) {
@@ -127,7 +125,7 @@ const CouponForm = ({ setPageType }) => {
                 <Label sm="2">Title in Arabic</Label>
                 <Col sm="10">
                   <input
-                    className="form-control"
+                    className="form-control input-direction"
                     type="text"
                     placeholder="Title in Arabic"
                     {...register('title_ar', {
@@ -166,7 +164,7 @@ const CouponForm = ({ setPageType }) => {
                 <Label sm="2">Description in Arabic</Label>
                 <Col sm="10">
                   <textarea
-                    className="form-control"
+                    className="form-control input-direction"
                     rows="5"
                     {...register('description_ar', {
                       required: 'Please enter Arabic description.',
@@ -220,7 +218,7 @@ const CouponForm = ({ setPageType }) => {
                       setStartDate(date);
                     }}
                     placeholderText="Select Date"
-                    dateFormat="dd/MM/yyyy"
+                    dateFormat="dd-MM-yyyy"
                   />
                   {errorValidation.startDate === 1 && (
                     <p className="val-error">Please enter start date.</p>
@@ -239,7 +237,7 @@ const CouponForm = ({ setPageType }) => {
                       setEndDate(date);
                     }}
                     placeholderText="Select Date"
-                    dateFormat="dd/MM/yyyy"
+                    dateFormat="dd-MM-yyyy"
                   />
 
                   {errorValidation.endDate === 1 && (

@@ -40,6 +40,10 @@
   justify-content: space-evenly;
 }
 
-.react-datepicker-wrapper{
+.react-datepicker-wrapper {
   display: block !important;
+}
+
+.input-direction {
+  direction: 'rtl';
 }

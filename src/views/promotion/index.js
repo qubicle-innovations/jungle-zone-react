@@ -10,19 +10,34 @@ const PromotionIndex = () => {
   const [pageType, setPageType] = useState('list');
   const dispatch = useDispatch();
   const createStatus = useSelector((state) => state.promotion.createPromotionStatus);
+  const updateStatus = useSelector((state) => state.promotion.updatePromotionStatus);
   useEffect(() => {
     let msg = '';
+    let chnge = 0;
     if (createStatus) {
       if (createStatus.success === true) {
         msg = createStatus.response;
-        toast(msg);
-        dispatch(resetFunction());
-        setPageType('list');
+        chnge = 1;
       } else if (createStatus.success === false) {
-        toast.error(msg);
+        chnge = 2;
       }
     }
-  }, [createStatus, dispatch]);
+    if (updateStatus) {
+      if (updateStatus.success === true) {
+        msg = updateStatus.response;
+        chnge = 1;
+      } else if (updateStatus.success === false) {
+        chnge = 2;
+      }
+    }
+    if (chnge === 1) {
+      toast(msg);
+      dispatch(resetFunction());
+      setPageType('list');
+    } else if (chnge === 2) {
+      toast.error(msg);
+    }
+  }, [createStatus, updateStatus, dispatch]);
 
   const renderPages = () => {
     switch (pageType) {

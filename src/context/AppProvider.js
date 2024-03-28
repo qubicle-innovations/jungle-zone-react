@@ -10,6 +10,9 @@ const StateContext = createContext();
 // Initial state
 const initialState = {
   couponEditData: {},
+  promotionEditData: {},
+  attractionEditData: {},
+  subadminEditData: {},
 };
 
 // Reducer function
@@ -17,6 +20,12 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'coupon_edit':
       return { ...state, couponEditData: action.payload };
+    case 'promotion_edit':
+      return { ...state, promotionEditData: action.payload };
+    case 'attraction_edit':
+      return { ...state, attractionEditData: action.payload };
+    case 'subadmin_edit':
+      return { ...state, subadminEditData: action.payload };
     default:
       return state;
   }

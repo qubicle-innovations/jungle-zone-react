@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
-import { fetchData, postData } from '../../service/Service';
+import { fetchData, postData, deleteData } from '../../service/Service';
 import {
   createPromotionAction,
   updatePromotionAction,
@@ -13,17 +13,19 @@ function* createPromotion(action) {
 }
 
 function* updatePromotion(action) {
-  const data = yield call(postData, action.payload);
+  const promotionId = action.payload?.promotionId;
+  const data = yield call(postData, `admin/promotion/${promotionId}`, action.payload?.data);
   yield put(updatePromotionAction(data));
 }
 
 function* deletePromotion(action) {
-  const data = yield call(postData, action.payload);
+  const promotionId = action.payload;
+  const data = yield call(deleteData, `admin/promotion/${promotionId}`);
   yield put(deletePromotionAction(data));
 }
 
-function* listPromotion(action) {
-  const data = yield call(fetchData, action.payload);
+function* listPromotion() {
+  const data = yield call(fetchData, 'admin/promotion');
   yield put(listPromotionAction(data));
 }
 

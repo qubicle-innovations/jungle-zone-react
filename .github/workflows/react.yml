@@ -23,7 +23,7 @@ jobs:
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -avzr
-          path: dist/
+          path: ./
           remote_path: /var/www/junglezone-cicdtest2/
           remote_host: 20.197.33.168
           remote_port: 22

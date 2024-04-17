@@ -24,6 +24,30 @@ const GalleryForm = ({ setPageType }) => {
           </FormGroup>
           <FormGroup>
             <Row>
+              <Label sm="2">Arabic Title</Label>
+              <Col sm="10">
+                <Input type="text" placeholder="Title in Arabic" name="title" />
+              </Col>
+            </Row>
+          </FormGroup>
+          <FormGroup>
+            <Row>
+              <Label sm="2">Cover Image</Label>
+              <Col sm="10">
+                <Input type="file" placeholder="" accept="*" />
+              </Col>
+            </Row>
+          </FormGroup>
+          <FormGroup>
+            <Row>
+              <Label sm="2">Cover Thumb Image</Label>
+              <Col sm="10">
+                <Input type="file" placeholder="" accept="*" />
+              </Col>
+            </Row>
+          </FormGroup>
+          <FormGroup>
+            <Row>
               <Label sm="2">Images/Videos</Label>
               <Col sm="10">
                 <Input type="file" placeholder="" accept="*" />

@@ -1,7 +1,7 @@
 import ImageGallery from 'react-image-gallery';
-// import {Row, Col } from 'reactstrap';
-// import PropTypes from 'prop-types';
-// import ComponentCard from '../../components/ComponentCard';
+import {Row, Col } from 'reactstrap';
+import PropTypes from 'prop-types';
+import ComponentCard from '../../components/ComponentCard';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
 const images = [
@@ -19,23 +19,23 @@ const images = [
   },
 ];
 
-const MyGallery = () => {
+const MyGallery = ({ setPageType }) => {
   return (
-    // <Row>
-    //   <Col md="12">
-    //     <ComponentCard
-    //       title="Gallery Management"
-    //       buttontext="Back"
-    //       pagetype="view"
-    //       setPageType={setPageType}
-    //     >
+    <Row>
+      <Col md="12">
+        <ComponentCard
+          title="Gallery Management"
+          buttontext="Back"
+          pagetype="list"
+          setPageType={setPageType}
+        >
           <ImageGallery items={images} />
-    //     </ComponentCard>
-    //   </Col>
-    // </Row>
+        </ComponentCard>
+      </Col>
+    </Row>
   );
 };
-// MyGallery.propTypes = {
-//     setPageType: PropTypes.func,
-//   };
+MyGallery.propTypes = {
+    setPageType: PropTypes.func,
+  };
 export default MyGallery;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import GalleryAdd from './Form';
-import GalleryList from './List';
+// import GalleryList from './List';
 import GalleryView from './View';
 import MyGalview from './GalView';
 
@@ -9,15 +9,15 @@ const GalleryIndex = () => {
 
   const renderPages = () => {
     switch (pageType) {
-      case 'list':
-        return <GalleryList setPageType={setPageType} />;
+      // case 'list':
+      //   return <GalleryList setPageType={setPageType} />;
       case 'add':
         return <GalleryAdd setPageType={setPageType} />;
       case 'edit':
         return <GalleryAdd setPageType={setPageType} />;
-      case 'view':
+      case 'list':
         return <GalleryView setPageType={setPageType} />;
-      case 'galview':
+      case 'view':
         return <MyGalview setPageType={setPageType} />;
       default:
         return null;

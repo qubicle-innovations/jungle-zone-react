@@ -20,8 +20,8 @@ const GalleryView = ({ setPageType }) => {
       <Col md="12">
         <ComponentCard
           title="Gallery Management"
-          buttontext="Back"
-          pagetype="list"
+          buttontext="New Gallery"
+          pagetype="add"
           setPageType={setPageType}
         >
           {BlogData.map((blg) => (
@@ -30,7 +30,9 @@ const GalleryView = ({ setPageType }) => {
                 <CardImg alt="Card image cap" src={blg.image} />
                 <CardBody className="p-4">
                   <CardTitle tag="h4">{blg.title}</CardTitle>
-                  <Button color={blg.btnbg} onClick={()=>setPageType('galview')}>View</Button>
+                  <Button color={blg.btnbg} onClick={() => setPageType('view')}>
+                    View
+                  </Button>
                 </CardBody>
               </Card>
             </Col>
@@ -41,6 +43,6 @@ const GalleryView = ({ setPageType }) => {
   );
 };
 GalleryView.propTypes = {
-    setPageType: PropTypes.func,
-  };
+  setPageType: PropTypes.func,
+};
 export default GalleryView;

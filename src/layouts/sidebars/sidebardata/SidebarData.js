@@ -10,7 +10,7 @@ const SidebarData = [
   },
   {
     title: 'Sub Admins',
-    href: '/home',
+    href: '/subadmin',
     icon: <Icon.Users />,
     id: 2,
     collapisble: false,
@@ -64,8 +64,8 @@ const SidebarData = [
         id: 6.3,
         collapisble: false,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 export default SidebarData;

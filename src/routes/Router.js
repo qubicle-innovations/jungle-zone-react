@@ -17,6 +17,7 @@ const Coupon = Loadable(lazy(() => import('../views/coupon')));
 const Promotion = Loadable(lazy(() => import('../views/promotion')));
 const Gallery = Loadable(lazy(() => import('../views/gallery')));
 const Subadmin = Loadable(lazy(() => import('../views/subadmin')));
+const Category = Loadable(lazy(() => import('../views/category')));
 
 const ThemeRoutes = [
   {
@@ -27,6 +28,7 @@ const ThemeRoutes = [
       { path: '/promotion', name: 'Promotion', exact: true, element: <Promotion /> },
       { path: '/gallery', name: 'Gallery', exact: true, element: <Gallery /> },
       { path: '/subadmin', name: 'Subadmin', exact: true, element: <Subadmin /> },
+      { path: '/attraction/category', name: 'Category', exact: true, element: <Category /> },
     ],
   },
   {

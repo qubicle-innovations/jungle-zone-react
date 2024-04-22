@@ -38,28 +38,28 @@ const SidebarData = [
   },
   {
     title: 'Attractions',
-    href: '/dashboards',
+    href: '#',
     id: 6,
     icon: <Icon.Grid />,
     collapisble: true,
     children: [
       {
         title: 'Catergories',
-        href: '/dashboards/minimal',
+        href: '/attraction/category',
         icon: <Icon.Disc />,
         id: 6.1,
         collapisble: false,
       },
       {
         title: 'Sub-catergories',
-        href: '/dashboards/minimal',
+        href: '/attraction/category',
         icon: <Icon.Disc />,
         id: 6.2,
         collapisble: false,
       },
       {
         title: 'Details',
-        href: '/dashboards/minimal',
+        href: '/attraction',
         icon: <Icon.Disc />,
         id: 6.3,
         collapisble: false,

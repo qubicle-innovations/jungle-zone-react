@@ -5,6 +5,7 @@ import {
   updateCategoryAction,
   deleteCategoryAction,
   listCategoryAction,
+  listSubcategoryAction,
 } from './CategorySlice';
 
 function* createCategory(action) {
@@ -29,9 +30,16 @@ function* listCategory() {
   yield put(listCategoryAction(data));
 }
 
+function* listSubcategory(action) {
+  const categoryId = action.payload?.categoryId;
+  const data = yield call(fetchData, `admin/category?category_id=${categoryId}`);
+  yield put(listSubcategoryAction(data));
+}
+
 function* categorySaga() {
   yield takeEvery('category/createCategory', createCategory);
   yield takeLatest('category/listCategory', listCategory);
+  yield takeLatest('category/listSubcategory', listSubcategory);
   yield takeEvery('category/updateCategory', updateCategory);
   yield takeEvery('category/deleteCategory', deleteCategory);
 }

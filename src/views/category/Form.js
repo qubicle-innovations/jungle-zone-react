@@ -9,7 +9,6 @@ import ComponentCard from '../../components/ComponentCard';
 import { createCategory, updateCategory } from '../../store/category/CategorySlice';
 import { StateContext } from '../../context/AppProvider';
 
-const uploadurl = `${process.env.REACT_APP_UPLOAD_URL}`;
 
 const CategoryForm = ({ setPageType }) => {
   const dispatch = useDispatch();
@@ -27,9 +26,6 @@ const CategoryForm = ({ setPageType }) => {
     defaultValues: {
       title: Object.keys(editData).length > 0 ? editData.title : '',
       title_ar: Object.keys(editData).length > 0 ? editData.title_ar : '',
-      image: Object.keys(editData).length > 0 ? editData.image : null,
-      banner: Object.keys(editData).length > 0 ? editData.banner : null,
-      banner_mob: Object.keys(editData).length > 0 ? editData.banner_mob : null,
     },
     resolver: undefined,
     context: undefined,
@@ -50,9 +46,6 @@ const CategoryForm = ({ setPageType }) => {
 
       formData.append('title', data.title);
       formData.append('title_ar', data.title_ar);
-      formData.append('image', data.image[0]);
-      formData.append('banner', data.banner[0]);
-      formData.append('banner_mob', data.banner_mob[0]);
       if (Object.keys(editData).length === 0) {
         dispatch(createCategory(formData));
       } else {
@@ -109,91 +102,6 @@ const CategoryForm = ({ setPageType }) => {
                     name="title_ar"
                     render={({ message }) => <p className="val-error">{message}</p>}
                   />{' '}
-                </Col>
-              </Row>
-            </FormGroup>
-            <FormGroup>
-              <Row>
-                <Label sm="2">Category Image</Label>
-                <Col sm="10">
-                  <input
-                    className="form-control"
-                    type="file"
-                    placeholder=""
-                    {...register('image', {
-                      required: editData?.image ? false : 'Please upload category image.',
-                    })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="image"
-                    render={({ message }) => <p className="val-error">{message}</p>}
-                  />{' '}
-                </Col>
-              </Row>
-              <Row>
-                <Col sm="10" className="text-center mt-3">
-                  {Object.keys(editData).length > 0 ? (
-                    <img alt="" src={uploadurl + editData.image} width={100} height={100} />
-                  ) : (
-                    ''
-                  )}
-                </Col>
-              </Row>
-            </FormGroup>
-            <FormGroup>
-              <Row>
-                <Label sm="2">Banner Image</Label>
-                <Col sm="10">
-                  <input
-                    className="form-control"
-                    type="file"
-                    placeholder=""
-                    {...register('banner', {
-                      required: editData?.banner ? false : 'Please upload banner image.',
-                    })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="banner"
-                    render={({ message }) => <p className="val-error">{message}</p>}
-                  />{' '}
-                </Col>
-              </Row>
-              <Row>
-                <Col sm="10" className="text-center mt-3">
-                  {Object.keys(editData).length > 0 ? (
-                    <img alt="" src={uploadurl + editData.banner} width={100} height={100} />
-                  ) : (
-                    ''
-                  )}
-                </Col>
-              </Row>
-            </FormGroup>
-            <FormGroup>
-              <Row>
-                <Label sm="2">Mobile Banner Image</Label>
-                <Col sm="10">
-                  <input
-                    className="form-control"
-                    type="file"
-                    placeholder=""
-                    {...register('banner_mob')}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="banner_mob"
-                    render={({ message }) => <p className="val-error">{message}</p>}
-                  />{' '}
-                </Col>
-              </Row>
-              <Row>
-                <Col sm="10" className="text-center mt-3">
-                  {Object.keys(editData).length > 0 ? (
-                    <img alt="" src={uploadurl + editData.banner_mob} width={100} height={100} />
-                  ) : (
-                    ''
-                  )}
                 </Col>
               </Row>
             </FormGroup>

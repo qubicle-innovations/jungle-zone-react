@@ -8,18 +8,22 @@ import { toast } from 'react-toastify';
 import { DispatchContext } from '../../context/AppProvider';
 import ComponentCard from '../../components/ComponentCard';
 import CustomPagination from '../../components/CustomPagination';
-import { listCategory, deleteCategory, resetFunction } from '../../store/category/CategorySlice';
+import {
+  listAttraction,
+  deleteAttraction,
+  resetFunction,
+} from '../../store/attraction/AttractionSlice';
 
-const CategoryList = ({ setPageType }) => {
+const AttractionList = ({ setPageType }) => {
   const dispatch = useDispatch();
   const contextDispatch = useContext(DispatchContext);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const listData = useSelector((state) => state.category.listCategoryStatus);
-  const delteStatus = useSelector((state) => state.category.deleteCategoryStatus);
+  const listData = useSelector((state) => state.attraction.listAttractionStatus);
+  const delteStatus = useSelector((state) => state.attraction.deleteAttractionStatus);
 
   useEffect(() => {
-    dispatch(listCategory());
+    dispatch(listAttraction());
   }, [dispatch]);
 
   useEffect(() => {
@@ -29,12 +33,12 @@ const CategoryList = ({ setPageType }) => {
         msg = delteStatus.response;
         toast(msg);
         dispatch(resetFunction());
+        dispatch(listAttraction());
       } else if (delteStatus.success === false) {
         toast.error(msg);
         dispatch(resetFunction());
       }
     }
-    dispatch(listCategory());
   }, [delteStatus, dispatch]);
 
   const [itemOffset, setItemOffset] = useState(0);
@@ -43,13 +47,13 @@ const CategoryList = ({ setPageType }) => {
   let currentItems = [];
   let totalPages = 0;
   let slCount = 0;
-  if (listData && listData.response !== undefined && listData.response.categories.length > 0) {
-    const totalItems = listData.response.categories.length;
-    currentItems = listData.response.categories.slice(itemOffset, endOffset);
+  if (listData && listData.response !== undefined && listData.response.attractions.length > 0) {
+    const totalItems = listData.response.attractions.length;
+    currentItems = listData.response.attractions.slice(itemOffset, endOffset);
     totalPages = Math.ceil(totalItems / itemsPerPage);
 
     if (Object.keys(currentItems).length > 0) {
-      const index = listData.response.categories.findIndex((itm) => {
+      const index = listData.response.attractions.findIndex((itm) => {
         return itm.id === currentItems[0].id;
       });
       slCount = index;
@@ -65,22 +69,21 @@ const CategoryList = ({ setPageType }) => {
 
   const handleEditClick = (cpn) => {
     contextDispatch({
-      type: 'category_edit',
+      type: 'attraction_edit',
       payload: cpn,
     });
     setPageType('edit');
   };
 
   const handleDeleteClick = (id) => {
-    dispatch(deleteCategory(id));
+    dispatch(deleteAttraction(id));
   };
-
   return (
     <Row>
       <Col md="12">
         <ComponentCard
-          title="Category Management"
-          buttontext="New Category"
+          title="Attraction Management"
+          buttontext="New Attraction"
           pagetype="add"
           setPageType={setPageType}
         >
@@ -115,7 +118,7 @@ const CategoryList = ({ setPageType }) => {
                               className="icon-delete"
                               onClick={() => {
                                 // eslint-disable-next-line
-                                if (window.confirm('Delete the category?')) {
+                                if (window.confirm('Delete the attraction?')) {
                                   handleDeleteClick(cpn.id);
                                 }
                               }}
@@ -148,7 +151,7 @@ const CategoryList = ({ setPageType }) => {
   );
 };
 
-CategoryList.propTypes = {
+AttractionList.propTypes = {
   setPageType: PropTypes.func,
 };
-export default CategoryList;
+export default AttractionList;

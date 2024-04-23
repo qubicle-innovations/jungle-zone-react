@@ -6,6 +6,7 @@ import coupon from './coupon/CouponSlice';
 import promotion from './promotion/PromotionSlice';
 import subadmin from './subadmin/SubadminSlice';
 import category from './category/CategorySlice';
+import attraction from './attraction/AttractionSlice';
 
 const rootReducer = combineReducers({
   // public
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   promotion,
   subadmin,
   category,
+  attraction,
 });
 
 export default rootReducer;

@@ -52,7 +52,7 @@ const SidebarData = [
       },
       {
         title: 'Sub-catergories',
-        href: '/attraction/category',
+        href: '/attraction/subcategory',
         icon: <Icon.Disc />,
         id: 6.2,
         collapisble: false,

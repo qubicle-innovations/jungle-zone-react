@@ -1,21 +1,84 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, FormGroup, Label, Card, CardBody, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 import ComponentCard from '../../components/ComponentCard';
-import { createPromotion, updatePromotion } from '../../store/promotion/PromotionSlice';
+import { createAttraction, updateAttraction } from '../../store/attraction/AttractionSlice';
+import { listCategory, listSubcategory } from '../../store/category/CategorySlice';
 import { StateContext } from '../../context/AppProvider';
 
 const uploadurl = `${process.env.REACT_APP_UPLOAD_URL}`;
 
-const PromotionForm = ({ setPageType }) => {
+const AttractionForm = ({ setPageType }) => {
   const dispatch = useDispatch();
   const contData = useContext(StateContext);
-  const editData = contData.promotionEditData;
+  const editData = contData.attractionEditData;
   const [errorValidation, setErrorValidation] = useState({});
+
+  const listData = useSelector((state) => state.category.listCategoryStatus);
+  const [selectCatOptions, setSelectCatOptions] = useState([]);
+  const [catSelected, setCatSelected] = useState({
+    label: 'Select Category',
+    value: '',
+  });
+
+  const listSubData = useSelector((state) => state.category.listSubcategoryStatus);
+  const [selectSubcatOptions, setSelectSubcatOptions] = useState([]);
+  const [subcatSelected, setSubcatSelected] = useState({
+    label: 'Select Sub-category',
+    value: '',
+  });
+
+  useEffect(() => {
+    if (listSubData && listSubData.success === true) {
+      const data = listSubData.response.categories;
+      const subcatOptions = data.map((item) => ({
+        label: item.title, // <-- input values you are matching + item.title_ar
+        value: item.id,
+      }));
+      setSelectSubcatOptions(subcatOptions);
+    }
+  }, [dispatch, listSubcategory]);
+
+  useEffect(() => {
+    dispatch(listCategory());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (listData && listData.success === true) {
+      const data = listData.response.categories;
+      const catOptions = data.map((item) => ({
+        label: item.title, // <-- input values you are matching + item.title_ar
+        value: item.id,
+      }));
+      setSelectCatOptions(catOptions);
+    }
+  }, [dispatch, listCategory]);
+
+  const handleCatChange = (val) => {
+    setCatSelected(val);
+    const payload = { categoryId: val.value };
+    dispatch(listSubcategory(payload));
+  };
+
+  const handleSubcatChange = (val) => {
+    setSubcatSelected(val);
+  };
+
+  useEffect(() => {
+    if (listSubData && listSubData.success === true) {
+      const data = listSubData.response.categories;
+      const subcatOptions = data.map((item) => ({
+        label: item.title, // <-- input values you are matching + item.title_ar
+        value: item.id,
+      }));
+      setSelectSubcatOptions(subcatOptions);
+    }
+  }, [dispatch, listSubcategory]);
 
   const {
     register,
@@ -48,14 +111,17 @@ const PromotionForm = ({ setPageType }) => {
 
     formData.append('title', data.title);
     formData.append('title_ar', data.title_ar);
+    formData.append('category_id', catSelected.value);
+    formData.append('subcategory_id', subcatSelected.value);
+    formData.append('title_ar', data.title_ar);
     formData.append('description', data.description);
     formData.append('description_ar', data.description_ar);
     formData.append('image', data.image[0]);
     if (Object.keys(editData).length === 0) {
-      dispatch(createPromotion(formData));
+      dispatch(createAttraction(formData));
     } else {
-      const payload = { promotionId: editData.id, data: formData };
-      dispatch(updatePromotion(payload));
+      const payload = { attractionId: editData.id, data: formData };
+      dispatch(updateAttraction(payload));
     }
   };
 
@@ -64,7 +130,7 @@ const PromotionForm = ({ setPageType }) => {
       <Col md="12">
         <form onSubmit={handleSubmit(submitForm)}>
           <ComponentCard
-            title="Promotion Management"
+            title="Attraction Management"
             buttontext="Back"
             pagetype="list"
             setPageType={setPageType}
@@ -111,6 +177,42 @@ const PromotionForm = ({ setPageType }) => {
             </FormGroup>
             <FormGroup>
               <Row>
+                <Label sm="2">Category</Label>
+                <Col sm="10">
+                  <Select
+                    value={catSelected}
+                    onChange={(selected) => handleCatChange(selected)}
+                    options={selectCatOptions}
+                    classNamePrefix="select2-selection"
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="category"
+                    render={({ message }) => <p className="val-error">{message}</p>}
+                  />{' '}
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <Label sm="2">Sub-category</Label>
+                <Col sm="10">
+                  <Select
+                    value={subcatSelected}
+                    onChange={(selected) => handleSubcatChange(selected)}
+                    options={selectSubcatOptions}
+                    classNamePrefix="select2-selection"
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="category"
+                    render={({ message }) => <p className="val-error">{message}</p>}
+                  />{' '}
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row>
                 <Label sm="2">Description</Label>
                 <Col sm="10">
                   <textarea
@@ -149,14 +251,14 @@ const PromotionForm = ({ setPageType }) => {
             </FormGroup>
             <FormGroup>
               <Row>
-                <Label sm="2">Promotion Image</Label>
+                <Label sm="2">Attraction Image</Label>
                 <Col sm="10">
                   <input
                     className="form-control"
                     type="file"
                     placeholder=""
                     {...register('image', {
-                      required: editData?.image ? false : 'Please upload promotion image.',
+                      required: editData?.image ? false : 'Please upload attraction image.',
                     })}
                   />
                   <ErrorMessage
@@ -193,8 +295,8 @@ const PromotionForm = ({ setPageType }) => {
   );
 };
 
-PromotionForm.propTypes = {
+AttractionForm.propTypes = {
   setPageType: PropTypes.func,
 };
 
-export default PromotionForm;
+export default AttractionForm;

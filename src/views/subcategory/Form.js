@@ -1,21 +1,60 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, FormGroup, Label, Card, CardBody, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 import ComponentCard from '../../components/ComponentCard';
-import { createPromotion, updatePromotion } from '../../store/promotion/PromotionSlice';
+import { listCategory, createCategory, updateCategory } from '../../store/category/CategorySlice';
 import { StateContext } from '../../context/AppProvider';
 
 const uploadurl = `${process.env.REACT_APP_UPLOAD_URL}`;
 
-const PromotionForm = ({ setPageType }) => {
+const CategoryForm = ({ setPageType }) => {
   const dispatch = useDispatch();
   const contData = useContext(StateContext);
-  const editData = contData.promotionEditData;
+  const editData = contData.categoryEditData;
   const [errorValidation, setErrorValidation] = useState({});
+
+  const listData = useSelector((state) => state.category.listCategoryStatus);
+
+  const [selectCatOptions, setSelectCatOptions] = useState([]);
+  const [catSelected, setCatSelected] = useState({
+    label: 'Select Category',
+    value: '',
+  });
+
+  useEffect(() => {
+    dispatch(listCategory());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (listData && listData.success === true) {
+      console.log(listData, 'listData');
+      const data = listData.response.categories;
+      const catOptions = data.map((item) => ({
+        label: item.title, // <-- input values you are matching + item.title_ar
+        value: item.id,
+      }));
+      setSelectCatOptions(catOptions);
+
+      if (Object.keys(editData).length > 0) {
+        if (editData.category_id) {
+          const v = {
+            label: editData.category.name, // <-- input values you are matching
+            value: editData.category.id,
+          };
+          setCatSelected(v);
+        }
+      }
+    }
+  }, [dispatch, listCategory]);
+
+  const handleCatChange = (val) => {
+    setCatSelected(val);
+  };
 
   const {
     register,
@@ -27,9 +66,9 @@ const PromotionForm = ({ setPageType }) => {
     defaultValues: {
       title: Object.keys(editData).length > 0 ? editData.title : '',
       title_ar: Object.keys(editData).length > 0 ? editData.title_ar : '',
-      description: Object.keys(editData).length > 0 ? editData.description : '',
-      description_ar: Object.keys(editData).length > 0 ? editData.description_ar : '',
       image: Object.keys(editData).length > 0 ? editData.image : null,
+      banner: Object.keys(editData).length > 0 ? editData.banner : null,
+      banner_mob: Object.keys(editData).length > 0 ? editData.banner_mob : null,
     },
     resolver: undefined,
     context: undefined,
@@ -41,21 +80,25 @@ const PromotionForm = ({ setPageType }) => {
   });
 
   const submitForm = async (data) => {
+    const valid = 0;
     setErrorValidation({
       ...errorValidation,
     });
-    const formData = new FormData();
+    if (valid === 0) {
+      const formData = new FormData();
 
-    formData.append('title', data.title);
-    formData.append('title_ar', data.title_ar);
-    formData.append('description', data.description);
-    formData.append('description_ar', data.description_ar);
-    formData.append('image', data.image[0]);
-    if (Object.keys(editData).length === 0) {
-      dispatch(createPromotion(formData));
-    } else {
-      const payload = { promotionId: editData.id, data: formData };
-      dispatch(updatePromotion(payload));
+      formData.append('title', data.title);
+      formData.append('title_ar', data.title_ar);
+      formData.append('image', data.image[0]);
+      formData.append('banner', data.banner[0]);
+      formData.append('banner_mob', data.banner_mob[0]);
+      formData.append('category_id', catSelected && catSelected.value);
+      if (Object.keys(editData).length === 0) {
+        dispatch(createCategory(formData));
+      } else {
+        const payload = { categoryId: editData.id, data: formData };
+        dispatch(updateCategory(payload));
+      }
     }
   };
 
@@ -64,7 +107,7 @@ const PromotionForm = ({ setPageType }) => {
       <Col md="12">
         <form onSubmit={handleSubmit(submitForm)}>
           <ComponentCard
-            title="Promotion Management"
+            title="Sub-category Management"
             buttontext="Back"
             pagetype="list"
             setPageType={setPageType}
@@ -111,52 +154,33 @@ const PromotionForm = ({ setPageType }) => {
             </FormGroup>
             <FormGroup>
               <Row>
-                <Label sm="2">Description</Label>
+                <Label sm="2">Category</Label>
                 <Col sm="10">
-                  <textarea
-                    className="form-control"
-                    rows="5"
-                    {...register('description', {
-                      required: 'Please enter description.',
-                    })}
-                  ></textarea>
+                  <Select
+                    value={catSelected}
+                    onChange={(selected) => handleCatChange(selected)}
+                    options={selectCatOptions}
+                    classNamePrefix="select2-selection"
+                  />
                   <ErrorMessage
                     errors={errors}
-                    name="description"
+                    name="title_ar"
                     render={({ message }) => <p className="val-error">{message}</p>}
                   />{' '}
                 </Col>
               </Row>
             </FormGroup>
+
             <FormGroup>
               <Row>
-                <Label sm="2">Description in Arabic</Label>
-                <Col sm="10">
-                  <textarea
-                    className="form-control input-direction"
-                    rows="5"
-                    {...register('description_ar', {
-                      required: 'Please enter Arabic description.',
-                    })}
-                  ></textarea>
-                  <ErrorMessage
-                    errors={errors}
-                    name="description_ar"
-                    render={({ message }) => <p className="val-error">{message}</p>}
-                  />{' '}
-                </Col>
-              </Row>
-            </FormGroup>
-            <FormGroup>
-              <Row>
-                <Label sm="2">Promotion Image</Label>
+                <Label sm="2">Category Image</Label>
                 <Col sm="10">
                   <input
                     className="form-control"
                     type="file"
                     placeholder=""
                     {...register('image', {
-                      required: editData?.image ? false : 'Please upload promotion image.',
+                      required: editData?.image ? false : 'Please upload category image.',
                     })}
                   />
                   <ErrorMessage
@@ -170,6 +194,62 @@ const PromotionForm = ({ setPageType }) => {
                 <Col sm="10" className="text-center mt-3">
                   {Object.keys(editData).length > 0 ? (
                     <img alt="" src={uploadurl + editData.image} width={100} height={100} />
+                  ) : (
+                    ''
+                  )}
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <Label sm="2">Banner Image</Label>
+                <Col sm="10">
+                  <input
+                    className="form-control"
+                    type="file"
+                    placeholder=""
+                    {...register('banner', {
+                      required: editData?.banner ? false : 'Please upload banner image.',
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="banner"
+                    render={({ message }) => <p className="val-error">{message}</p>}
+                  />{' '}
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="10" className="text-center mt-3">
+                  {Object.keys(editData).length > 0 ? (
+                    <img alt="" src={uploadurl + editData.banner} width={100} height={100} />
+                  ) : (
+                    ''
+                  )}
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <Label sm="2">Mobile Banner Image</Label>
+                <Col sm="10">
+                  <input
+                    className="form-control"
+                    type="file"
+                    placeholder=""
+                    {...register('banner_mob')}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="banner_mob"
+                    render={({ message }) => <p className="val-error">{message}</p>}
+                  />{' '}
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="10" className="text-center mt-3">
+                  {Object.keys(editData).length > 0 ? (
+                    <img alt="" src={uploadurl + editData.banner_mob} width={100} height={100} />
                   ) : (
                     ''
                   )}
@@ -193,8 +273,8 @@ const PromotionForm = ({ setPageType }) => {
   );
 };
 
-PromotionForm.propTypes = {
+CategoryForm.propTypes = {
   setPageType: PropTypes.func,
 };
 
-export default PromotionForm;
+export default CategoryForm;

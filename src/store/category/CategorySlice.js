@@ -37,9 +37,16 @@ export const categorySlice = createSlice({
     listCategoryAction: (state, action) => {
       state.listCategoryStatus = action.payload;
     },
+    listSubcategory: (state) => {
+      state.listSubcategoryStatus = {};
+    },
+    listSubcategoryAction: (state, action) => {
+      state.listSubcategoryStatus = action.payload;
+    },
     resetFunction: (state) => {
       state.createCategoryStatus = {};
       state.listCategoryStatus = {};
+      state.listSubcategoryStatus = {};
       state.updateCategoryStatus = {};
       state.deleteCategoryStatus = {};
     },
@@ -55,6 +62,8 @@ export const {
   deleteCategoryAction,
   listCategory,
   listCategoryAction,
+  listSubcategory,
+  listSubcategoryAction,
   resetFunction,
 } = categorySlice.actions;
 export default categorySlice.reducer;

@@ -1,32 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const gallerySlice = createSlice({
-  name: "gallery",
+  name: 'gallery',
   initialState: {
     createGalleryStatus: {},
     listGalleryStatus: {},
-    updateGalleryStatus: {},
     deleteGalleryStatus: {},
-    paramData:{},
+    paramData: {},
   },
   reducers: {
     createGallery: (state, action) => {
       state.createGalleryStatus = {};
-      state.paramData=action.payload;
+      state.paramData = action.payload;
+      console.log('eeeeeeee');
     },
     createGalleryAction: (state, action) => {
       state.createGalleryStatus = action.payload;
     },
-    updateGallery: (state, action) => {
-      state.updateGalleryStatus = {};
-      state.paramData=action.payload;
-    },
-    updateGalleryAction: (state, action) => {
-      state.updateGalleryStatus = action.payload;
-    },
     deleteGallery: (state, action) => {
       state.deleteGalleryStatus = {};
-      state.paramData=action.payload;
+      state.paramData = action.payload;
     },
     deleteGalleryAction: (state, action) => {
       state.deleteGalleryStatus = action.payload;
@@ -40,7 +33,6 @@ export const gallerySlice = createSlice({
     resetFunction: (state) => {
       state.createGalleryStatus = {};
       state.listGalleryStatus = {};
-      state.updateGalleryStatus = {};
       state.deleteGalleryStatus = {};
     },
   },
@@ -49,8 +41,6 @@ export const gallerySlice = createSlice({
 export const {
   createGallery,
   createGalleryAction,
-  updateGallery,
-  updateGalleryAction,
   deleteGallery,
   deleteGalleryAction,
   listGallery,

@@ -37,7 +37,7 @@ const GalleryList = ({ setPageType }) => {
     <Row>
       <Col md="12">
         <ComponentCard
-          title="Gallery Management"
+          title="Gallery Managementt"
           buttontext="New Gallery"
           pagetype="add"
           setPageType={setPageType}

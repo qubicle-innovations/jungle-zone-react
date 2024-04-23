@@ -5,6 +5,7 @@ import PromotionSaga from './promotion/PromotionSaga';
 import SubadminSaga from './subadmin/SubadminSaga';
 import CategorySaga from './category/CategorySaga';
 import AttractionSaga from './attraction/AttractionSaga';
+import GallerySaga from './gallery/GallerySaga';
 
 export default function* rootSaga() {
   yield all([
@@ -15,5 +16,6 @@ export default function* rootSaga() {
     SubadminSaga(),
     CategorySaga(),
     AttractionSaga(),
+    GallerySaga(),
   ]);
 }

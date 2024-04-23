@@ -14,6 +14,7 @@ const initialState = {
   attractionEditData: {},
   subadminEditData: {},
   categoryEditData: {},
+  galleryEditData: {},
 };
 
 // Reducer function
@@ -29,6 +30,8 @@ const reducer = (state, action) => {
       return { ...state, subadminEditData: action.payload };
     case 'category_edit':
       return { ...state, categoryEditData: action.payload };
+    case 'gallery_edit':
+      return { ...state, galleryEditData: action.payload };
     default:
       return state;
   }

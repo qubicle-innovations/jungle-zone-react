@@ -5,12 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import {
   Navbar,
   Nav,
-  NavItem,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   Button,
-  Input,
 } from 'reactstrap';
 import * as Icon from 'react-feather';
 import user1 from '../../assets/images/users/user4.jpg';
@@ -61,8 +59,7 @@ const Header = () => {
       {/******************************/}
 
       <Nav className="me-auto d-none d-lg-flex" navbar>
-
-        <NavItem className="app-search ps-3">
+        {/* <NavItem className="app-search ps-3">
           <Input
             id="txt-srch"
             name="search"
@@ -70,7 +67,7 @@ const Header = () => {
             className="rounded-pill"
             type="text"
           />
-        </NavItem>
+        </NavItem> */}
       </Nav>
 
       <div className="d-flex align-items-center">
@@ -84,7 +81,13 @@ const Header = () => {
           <DropdownMenu className="ddWidth">
             <ProfileDD />
             <div className="p-2 px-3">
-              <Button color="danger" size="sm" onClick={()=>{navigate('/logout')}}>
+              <Button
+                color="danger"
+                size="sm"
+                onClick={() => {
+                  navigate('/logout');
+                }}
+              >
                 Logout
               </Button>
             </div>

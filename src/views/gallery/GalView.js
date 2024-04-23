@@ -1,5 +1,5 @@
 import ImageGallery from 'react-image-gallery';
-import {Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import PropTypes from 'prop-types';
 import ComponentCard from '../../components/ComponentCard';
 import 'react-image-gallery/styles/css/image-gallery.css';
@@ -25,8 +25,8 @@ const MyGallery = ({ setPageType }) => {
       <Col md="12">
         <ComponentCard
           title="Gallery Management"
-          buttontext="Back"
-          pagetype="list"
+          buttontext="Add Image"
+          pagetype="add"
           setPageType={setPageType}
         >
           <ImageGallery items={images} />
@@ -36,6 +36,6 @@ const MyGallery = ({ setPageType }) => {
   );
 };
 MyGallery.propTypes = {
-    setPageType: PropTypes.func,
-  };
+  setPageType: PropTypes.func,
+};
 export default MyGallery;

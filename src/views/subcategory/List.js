@@ -139,7 +139,7 @@ const CategoryList = ({ setPageType }) => {
               </tr>
             </thead>
             <tbody>
-              {currentItems ? (
+              {catSelected.value && currentItems ? (
                 currentItems.map((cpn) => {
                   slCount += 1;
                   return (

@@ -42,6 +42,16 @@ const AttractionForm = ({ setPageType }) => {
       }));
       setSelectSubcatOptions(subcatOptions);
     }
+
+    if (Object.keys(editData).length > 0) {
+      if (editData.subcategory && editData.subcategory.id) {
+        const v = {
+          label: editData.subcategory.title, // <-- input values you are matching
+          value: editData.subcategory.id,
+        };
+        setSubcatSelected(v);
+      }
+    }
   }, [dispatch, listSubcategory]);
 
   useEffect(() => {
@@ -56,6 +66,16 @@ const AttractionForm = ({ setPageType }) => {
         value: item.id,
       }));
       setSelectCatOptions(catOptions);
+    }
+
+    if (Object.keys(editData).length > 0) {
+      if (editData.category && editData.category.id) {
+        const v = {
+          label: editData.category.title, // <-- input values you are matching
+          value: editData.category.id,
+        };
+        setCatSelected(v);
+      }
     }
   }, [dispatch, listCategory]);
 

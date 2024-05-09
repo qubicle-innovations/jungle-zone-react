@@ -51,7 +51,7 @@ const GalleryView = ({ setPageType }) => {
     <Row>
       <Col md="12">
         <ComponentCard
-          title="Gallery Managementrrf"
+          title="Gallery Management"
           buttontext="Add Image"
           pagetype="add"
           setPageType={setPageType}

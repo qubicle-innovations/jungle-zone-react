@@ -101,7 +101,7 @@ const CategoryList = ({ setPageType }) => {
 
   const handleEditClick = (cpn) => {
     contextDispatch({
-      type: 'category_edit',
+      type: 'subcategory_edit',
       payload: cpn,
     });
     setPageType('edit');

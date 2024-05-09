@@ -15,7 +15,7 @@ const uploadurl = `${process.env.REACT_APP_UPLOAD_URL}`;
 const CategoryForm = ({ setPageType }) => {
   const dispatch = useDispatch();
   const contData = useContext(StateContext);
-  const editData = contData.categoryEditData;
+  const editData = contData.subcategoryEditData;
   const [errorValidation, setErrorValidation] = useState({});
 
   const listData = useSelector((state) => state.category.listCategoryStatus);
@@ -43,7 +43,7 @@ const CategoryForm = ({ setPageType }) => {
       if (Object.keys(editData).length > 0) {
         if (editData.category_id) {
           const v = {
-            label: editData.category.name, // <-- input values you are matching
+            label: editData.category.title, // <-- input values you are matching
             value: editData.category.id,
           };
           setCatSelected(v);
@@ -80,13 +80,14 @@ const CategoryForm = ({ setPageType }) => {
   });
 
   const submitForm = async (data) => {
+    console.log('data', data);
     const valid = 0;
     setErrorValidation({
       ...errorValidation,
     });
     if (valid === 0) {
       const formData = new FormData();
-
+      console.log(data);
       formData.append('title', data.title);
       formData.append('title_ar', data.title_ar);
       formData.append('image', data.image[0]);

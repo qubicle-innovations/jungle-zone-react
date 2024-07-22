@@ -30,9 +30,11 @@ const CouponList = ({ setPageType }) => {
         msg = delteStatus.response;
         toast(msg);
         dispatch(resetFunction());
+        dispatch(listCoupon());
       } else if (delteStatus.success === false) {
         toast.error(msg);
         dispatch(resetFunction());
+        dispatch(listCoupon());
       }
     }
   }, [delteStatus, dispatch]);

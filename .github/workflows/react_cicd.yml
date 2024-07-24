@@ -25,7 +25,7 @@ jobs:
           switches: -avzr --delete
           path: build/
           remote_path: /var/www/junglezone-react/
-          remote_host: 20.197.33.168
+          remote_host: qubicle.net
           remote_port: 22
           remote_user: qubicle
           remote_key: ${{ secrets.DEPLOY_KEY }}

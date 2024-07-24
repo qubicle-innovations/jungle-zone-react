@@ -40,7 +40,6 @@ const GalleryView = ({ setPageType }) => {
   let currentItems = [];
   if (listData && listData.response !== undefined && listData.response.gallery.length > 0) {
     currentItems = listData.response.gallery.slice(itemOffset, endOffset);
-    console.log(currentItems);
   }
 
   const handleDeleteClick = (id) => {

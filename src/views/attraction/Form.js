@@ -96,10 +96,11 @@ const AttractionForm = ({ setPageType }) => {
         label: item.title, // <-- input values you are matching + item.title_ar
         value: item.id,
       }));
+      console.log(subcatOptions);
       setSelectSubcatOptions(subcatOptions);
     }
   }, [dispatch, listSubcategory]);
-
+console.log(selectSubcatOptions);
   const {
     register,
     formState: { errors },

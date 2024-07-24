@@ -11,7 +11,7 @@ import MyGalview from './GalView';
 const GalleryIndex = () => {
   const [pageType, setPageType] = useState('list');
   const dispatch = useDispatch();
-  const createStatus = useSelector((state) => state.gallery.creategalleryStatus);
+  const createStatus = useSelector((state) => state.gallery.createGalleryStatus);
   useEffect(() => {
     let msg = '';
     let chnge = 0;

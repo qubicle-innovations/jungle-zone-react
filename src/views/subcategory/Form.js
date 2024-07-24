@@ -32,7 +32,6 @@ const CategoryForm = ({ setPageType }) => {
 
   useEffect(() => {
     if (listData && listData.success === true) {
-      console.log(listData, 'listData');
       const data = listData.response.categories;
       const catOptions = data.map((item) => ({
         label: item.title, // <-- input values you are matching + item.title_ar
@@ -80,14 +79,12 @@ const CategoryForm = ({ setPageType }) => {
   });
 
   const submitForm = async (data) => {
-    console.log('data', data);
     const valid = 0;
     setErrorValidation({
       ...errorValidation,
     });
     if (valid === 0) {
       const formData = new FormData();
-      console.log(data);
       formData.append('title', data.title);
       formData.append('title_ar', data.title_ar);
       formData.append('image', data.image[0]);

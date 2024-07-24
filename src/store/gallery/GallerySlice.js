@@ -12,7 +12,6 @@ export const gallerySlice = createSlice({
     createGallery: (state, action) => {
       state.createGalleryStatus = {};
       state.paramData = action.payload;
-      console.log('eeeeeeee');
     },
     createGalleryAction: (state, action) => {
       state.createGalleryStatus = action.payload;

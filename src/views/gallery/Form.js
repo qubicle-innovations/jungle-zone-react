@@ -35,7 +35,6 @@ const GalleryForm = ({ setPageType }) => {
     });
     const formData = new FormData();
     formData.append('file', data.image[0]);
-    console.log('hre', data.image[0]);
     dispatch(createGallery(formData));
   };
 

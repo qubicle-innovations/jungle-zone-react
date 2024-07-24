@@ -44,12 +44,15 @@ const CategoryList = ({ setPageType }) => {
         value: item.id,
       }));
       setSelectCatOptions(catOptions);
+      setCatSelected(catOptions[0]);
+      const payload = { categoryId: catOptions[0].value };
+      dispatch(listSubcategory(payload));
     }
   }, [dispatch, listCategory]);
 
   useEffect(() => {
     let msg = '';
-    if (delteStatus) {
+    if (delteStatus && Object.keys(delteStatus).length > 0) {
       if (delteStatus.success === true) {
         msg = delteStatus.response;
         toast(msg);

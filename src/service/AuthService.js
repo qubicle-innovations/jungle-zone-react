@@ -7,7 +7,7 @@ const loginData = async (endpoint, payload) => {
       const response = await axios.post(`${BASE_URL}${endpoint}`, payload);
       return { result: response.data, msg: "success" };
     } catch (error) {
-      throw new Error('Error posting data');
+      return { msg: "Invalid Credentials" };
     }
   };
 export default loginData;

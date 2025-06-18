@@ -30,6 +30,7 @@ const PromotionForm = ({ setPageType }) => {
       description: Object.keys(editData).length > 0 ? editData.description : '',
       description_ar: Object.keys(editData).length > 0 ? editData.description_ar : '',
       image: Object.keys(editData).length > 0 ? editData.image : null,
+      publish: Object.keys(editData).length > 0 ? editData.publish : false,
     },
     resolver: undefined,
     context: undefined,
@@ -51,6 +52,7 @@ const PromotionForm = ({ setPageType }) => {
     formData.append('description', data.description);
     formData.append('description_ar', data.description_ar);
     formData.append('image', data.image[0]);
+    formData.append('publish', data.publish ? 1 : 0);
     if (Object.keys(editData).length === 0) {
       dispatch(createPromotion(formData));
     } else {
@@ -173,6 +175,19 @@ const PromotionForm = ({ setPageType }) => {
                   ) : (
                     ''
                   )}
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <Label sm="2">Publish</Label>
+                <Col sm="10">
+                  <input
+                    type="checkbox"
+                    id="publish"
+                    className="form-check-input"
+                    {...register('publish')}
+                  />
                 </Col>
               </Row>
             </FormGroup>

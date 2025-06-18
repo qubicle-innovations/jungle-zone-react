@@ -28,6 +28,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.logData = {};
       state.error = {};
+      localStorage.removeItem('token');
       storage.removeItem('persist:root');
     },
     resetData: (state) => {

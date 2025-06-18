@@ -83,6 +83,7 @@ const CategoryList = ({ setPageType }) => {
           buttontext="New Category"
           pagetype="add"
           setPageType={setPageType}
+          contextType='category_edit'
         >
           <Table responsive>
             <thead>
@@ -107,9 +108,9 @@ const CategoryList = ({ setPageType }) => {
                           <span>
                             <Icon.Edit className="icon-edit" onClick={() => handleEditClick(cpn)} />
                           </span>
-                          <span>
+                          {/* <span>
                             <Icon.Eye className="icon-view" />
-                          </span>
+                          </span> */}
                           <span>
                             <Icon.Trash
                               className="icon-delete"

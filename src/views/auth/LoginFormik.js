@@ -4,6 +4,8 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getLoginFetch, resetData } from '../../store/auth/AuthSlice';
 import AuthLogo from '../../layouts/logo/AuthLogo';
 import { ReactComponent as LeftBg } from '../../assets/images/bg/login-bgleft.svg';
@@ -18,6 +20,10 @@ const LoginFormik = () => {
     password: '',
   };
 
+  useEffect(() =>{
+    dispatch(resetData());
+  },[])
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email is invalid').required('Email is required'),
     password: Yup.string()
@@ -29,16 +35,14 @@ const LoginFormik = () => {
     dispatch(getLoginFetch({ values, navigate }));
   };
 
-
   const apiError = useSelector((state) => state.login.error);
+
   useEffect(() => {
-    if (apiError && apiError.data && apiError.data.error) {
-      // toast.error("Invalid credentials!", {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });
+    if (Object.keys(apiError).length > 0) {
+      toast.error(apiError.msg);
       dispatch(resetData());
     }
-  }, [apiError]);
+  }, [apiError, dispatch]);
 
   return (
     <div className="loginBox">
@@ -104,6 +108,7 @@ const LoginFormik = () => {
             </Card>
           </Col>
         </Row>
+        <ToastContainer />
       </Container>
     </div>
   );

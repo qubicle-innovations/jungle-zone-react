@@ -86,6 +86,7 @@ const PromotionList = ({ setPageType }) => {
           buttontext="New Promotion"
           pagetype="add"
           setPageType={setPageType}
+          contextType='promotion_edit'
         >
           <Table responsive>
             <thead>
@@ -110,9 +111,9 @@ const PromotionList = ({ setPageType }) => {
                           <span>
                             <Icon.Edit className="icon-edit" onClick={() => handleEditClick(cpn)} />
                           </span>
-                          <span>
+                          {/* <span>
                             <Icon.Eye className="icon-view" />
-                          </span>
+                          </span> */}
                           <span>
                             <Icon.Trash
                               className="icon-delete"

@@ -20,6 +20,7 @@ const Subadmin = Loadable(lazy(() => import('../views/subadmin')));
 const Category = Loadable(lazy(() => import('../views/category')));
 const Subcategory = Loadable(lazy(() => import('../views/subcategory')));
 const Attraction = Loadable(lazy(() => import('../views/attraction')));
+const SettingsForm = Loadable(lazy(() => import('../views/settings')));
 
 const ThemeRoutes = [
   {
@@ -33,6 +34,7 @@ const ThemeRoutes = [
       { path: '/attraction/category', name: 'Category', exact: true, element: <Category /> },
       { path: '/attraction/subcategory', name: 'Subcategory', exact: true, element: <Subcategory /> },
       { path: '/attraction', name: 'Attraction', exact: true, element: <Attraction /> },
+      { path: '/settings', name: 'Settings', exact: true, element: <SettingsForm /> },
     ],
   },
   {

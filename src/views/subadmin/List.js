@@ -82,6 +82,7 @@ const SubadminList = ({ setPageType }) => {
           buttontext="New Subadmin"
           pagetype="add"
           setPageType={setPageType}
+          contextType='subadmin_edit'
         >
           <Table responsive>
             <thead>
@@ -106,9 +107,9 @@ const SubadminList = ({ setPageType }) => {
                           <span>
                             <Icon.Edit className="icon-edit" onClick={() => handleEditClick(cpn)} />
                           </span>
-                          <span>
+                          {/* <span>
                             <Icon.Eye className="icon-view" />
-                          </span>
+                          </span> */}
                           <span>
                             <Icon.Trash
                               className="icon-delete"

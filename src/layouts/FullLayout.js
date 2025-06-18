@@ -1,4 +1,4 @@
-import { Outlet, useLocation, Link } from 'react-router-dom';
+import { Outlet, useLocation, Link, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Container, Breadcrumb, BreadcrumbItem, Row, Col } from 'reactstrap';
 import Header from './header/Header';
@@ -17,7 +17,13 @@ const FullLayout = () => {
   const firstUrl = location.pathname.split('/')[1];
   const secondUrl = location.pathname.split('/')[2];
 
+  let token = false;
+  token = localStorage.getItem('token');
+  
+  const auth = { token };
+
   return (
+     auth.token ? (
     <main>
       <div
         className={`pageWrapper d-md-block d-lg-flex ${toggleMiniSidebar ? 'isMiniSidebar' : ''}`}
@@ -64,6 +70,9 @@ const FullLayout = () => {
         </div>
       </div>
     </main>
+    ): (
+      <Navigate to="/" />
+    )
   );
 };
 

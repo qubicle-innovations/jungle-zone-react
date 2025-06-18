@@ -44,12 +44,21 @@ const AttractionForm = ({ setPageType }) => {
     }
 
     if (Object.keys(editData).length > 0) {
-      if (editData.subcategory && editData.subcategory.id) {
-        const v = {
-          label: editData.subcategory.title, // <-- input values you are matching
-          value: editData.subcategory.id,
-        };
-        setSubcatSelected(v);
+      if (editData.subcategory_id) {
+        // const v = {
+        //   label: editData.subcategory.title, // <-- input values you are matching
+        //   value: editData.subcategory.id,
+        // };
+
+        if (listSubData && listSubData.success === true) {
+          const data = listSubData.response.categories;
+
+          const [v] = data
+            .filter((item) => item.id === editData.subcategory_id)
+            .map(({ id, title }) => ({ value: id, label: title })) || [{}];
+
+          setSubcatSelected(v);
+        }
       }
     }
   }, [dispatch, listSubcategory]);
@@ -69,12 +78,19 @@ const AttractionForm = ({ setPageType }) => {
     }
 
     if (Object.keys(editData).length > 0) {
-      if (editData.category && editData.category.id) {
-        const v = {
-          label: editData.category.title, // <-- input values you are matching
-          value: editData.category.id,
-        };
-        setCatSelected(v);
+      if (editData.category_id) {
+        // const v = {
+        //   label: editData.category.title, // <-- input values you are matching
+        //   value: editData.category.id,
+        // };
+        if (listData && listData.success === true) {
+          const data = listData.response.categories;
+          const [v] = data
+            .filter((item) => item.id === editData.category_id)
+            .map(({ id, title }) => ({ value: id, label: title })) || [{}];
+
+          setCatSelected(v);
+        }
       }
     }
   }, [dispatch, listCategory]);
@@ -96,11 +112,10 @@ const AttractionForm = ({ setPageType }) => {
         label: item.title, // <-- input values you are matching + item.title_ar
         value: item.id,
       }));
-      console.log(subcatOptions);
       setSelectSubcatOptions(subcatOptions);
     }
   }, [dispatch, listSubcategory]);
-console.log(selectSubcatOptions);
+
   const {
     register,
     formState: { errors },
@@ -114,6 +129,7 @@ console.log(selectSubcatOptions);
       description: Object.keys(editData).length > 0 ? editData.description : '',
       description_ar: Object.keys(editData).length > 0 ? editData.description_ar : '',
       image: Object.keys(editData).length > 0 ? editData.image : null,
+      featured_ride: Object.keys(editData).length > 0 ? editData.featured_ride : false,
     },
     resolver: undefined,
     context: undefined,
@@ -129,6 +145,7 @@ console.log(selectSubcatOptions);
       ...errorValidation,
     });
     const formData = new FormData();
+    console.log(catSelected);
 
     formData.append('title', data.title);
     formData.append('title_ar', data.title_ar);
@@ -138,6 +155,8 @@ console.log(selectSubcatOptions);
     formData.append('description', data.description);
     formData.append('description_ar', data.description_ar);
     formData.append('image', data.image[0]);
+    formData.append('featured_ride', data.featured_ride ? 1 : 0);
+
     if (Object.keys(editData).length === 0) {
       dispatch(createAttraction(formData));
     } else {
@@ -296,6 +315,19 @@ console.log(selectSubcatOptions);
                   ) : (
                     ''
                   )}
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <Label sm="2">Featured Ride</Label>
+                <Col sm="10">
+                  <input
+                    type="checkbox"
+                    id="featured_ride"
+                    className="form-check-input"
+                    {...register('featured_ride')}
+                  />
                 </Col>
               </Row>
             </FormGroup>

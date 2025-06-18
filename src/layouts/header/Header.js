@@ -16,12 +16,18 @@ import user1 from '../../assets/images/users/user4.jpg';
 import { ToggleMiniSidebar, ToggleMobileSidebar } from '../../store/customizer/CustomizerSlice';
 import ProfileDD from './ProfileDD';
 import Logo from '../logo/Logo';
+import { userLogout } from '../../store/auth/AuthSlice';
 
 const Header = () => {
   const isDarkMode = useSelector((state) => state.customizer.isDark);
   const topbarColor = useSelector((state) => state.customizer.topbarBg);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleLogout = () =>{
+    dispatch(userLogout());
+    navigate('/');
+  }
 
   return (
     <Navbar
@@ -85,7 +91,7 @@ const Header = () => {
                 color="danger"
                 size="sm"
                 onClick={() => {
-                  navigate('/logout');
+                  handleLogout()
                 }}
               >
                 Logout

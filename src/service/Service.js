@@ -6,8 +6,7 @@ export const fetchData = async (endpoint) => {
     const response = await axiosInstance.get(`${endpoint}`);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw new Error('Error fetching data');
+    return {success : false};
   }
 };
 
@@ -16,8 +15,7 @@ export const postData = async (endpoint, data) => {
     const response = await axiosInstance.post(`${endpoint}`, data);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw new Error('Error posting data');
+    return {success : false};
   }
 };
 
@@ -26,8 +24,7 @@ export const putData = async (endpoint, data) => {
     const response = await axiosInstance.put(`${endpoint}`, data);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw new Error('Error posting data');
+    return {success : false};
   }
 };
 export const deleteData = async (endpoint) => {
@@ -35,8 +32,7 @@ export const deleteData = async (endpoint) => {
     const response = await axiosInstance.delete(`${endpoint}`);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw new Error('Error posting data');
+    return {success : false};
   }
 };
 

@@ -85,6 +85,7 @@ const CouponList = ({ setPageType }) => {
           buttontext="New Coupon"
           pagetype="add"
           setPageType={setPageType}
+          contextType='coupon_edit'
         >
           <Table responsive>
             <thead>
@@ -113,9 +114,9 @@ const CouponList = ({ setPageType }) => {
                           <span>
                             <Icon.Edit className="icon-edit" onClick={() => handleEditClick(cpn)} />
                           </span>
-                          <span>
+                          {/* <span>
                             <Icon.Eye className="icon-view" />
-                          </span>
+                          </span> */}
                           <span>
                             <Icon.Trash
                               className="icon-delete"

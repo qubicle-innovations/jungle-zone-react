@@ -19,6 +19,7 @@ const SubadminIndex = () => {
         msg = createStatus.response;
         chnge = 1;
       } else if (createStatus.success === false) {
+        msg = 'Faild to insert data';
         chnge = 2;
       }
     }
@@ -27,6 +28,7 @@ const SubadminIndex = () => {
         msg = updateStatus.response;
         chnge = 1;
       } else if (updateStatus.success === false) {
+        msg = 'Faild to update data';
         chnge = 2;
       }
     }
@@ -36,6 +38,7 @@ const SubadminIndex = () => {
       setPageType('list');
     } else if (chnge === 2) {
       toast.error(msg);
+      dispatch(resetFunction());
     }
   }, [createStatus, updateStatus, dispatch]);
 

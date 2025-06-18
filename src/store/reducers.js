@@ -8,6 +8,7 @@ import subadmin from './subadmin/SubadminSlice';
 import category from './category/CategorySlice';
 import attraction from './attraction/AttractionSlice';
 import gallery from './gallery/GallerySlice';
+import psettings from './passwordsettings/PSettingsSlice'
 
 const rootReducer = combineReducers({
   // public
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   category,
   attraction,
   gallery,
+  psettings,
 });
 
 export default rootReducer;

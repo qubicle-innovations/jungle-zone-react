@@ -6,17 +6,17 @@ import { getLoginSuccess, getLoginError } from './AuthSlice';
 function* fetchLoginData({ payload }) {
   const { values, navigate } = payload;
   const data = yield call(loginData, 'admin/login', values);
-  if (data.msg === 'success') {
+  if (data.msg === 'success' && data.result.success === true) {
     const secretPass = 'j123@nglez678$one';
     const token = CryptoJS.AES.encrypt(
-      JSON.stringify(data?.result?.response?.user?.token),
+      JSON.stringify(data.result.response.user.token),
       secretPass,
     ).toString();
     localStorage.setItem('token', token);
-    yield put(getLoginSuccess(data.response));
+    yield put(getLoginSuccess(data.result.response.user));
     navigate('/home');
   } else {
-    yield put(getLoginError(data.response));
+    yield put(getLoginError(data));
   }
 }
 

@@ -122,6 +122,7 @@ const CategoryList = ({ setPageType }) => {
           buttontext="New Sub-category"
           pagetype="add"
           setPageType={setPageType}
+          contextType='subcategory_edit'
         >
           <Col md="3">
             <Select
@@ -158,9 +159,9 @@ const CategoryList = ({ setPageType }) => {
                           <span>
                             <Icon.Edit className="icon-edit" onClick={() => handleEditClick(cpn)} />
                           </span>
-                          <span>
+                          {/* <span>
                             <Icon.Eye className="icon-view" />
-                          </span>
+                          </span> */}
                           <span>
                             <Icon.Trash
                               className="icon-delete"

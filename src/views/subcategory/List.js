@@ -48,7 +48,7 @@ const CategoryList = ({ setPageType }) => {
       const payload = { categoryId: catOptions[0].value };
       dispatch(listSubcategory(payload));
     }
-  }, [dispatch, listCategory]);
+  }, [dispatch, listData]);
 
   useEffect(() => {
     let msg = '';
@@ -122,7 +122,7 @@ const CategoryList = ({ setPageType }) => {
           buttontext="New Sub-category"
           pagetype="add"
           setPageType={setPageType}
-          contextType='subcategory_edit'
+          contextType="subcategory_edit"
         >
           <Col md="3">
             <Select

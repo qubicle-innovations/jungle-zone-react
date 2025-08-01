@@ -7,6 +7,8 @@ import CategorySaga from './category/CategorySaga';
 import AttractionSaga from './attraction/AttractionSaga';
 import GallerySaga from './gallery/GallerySaga';
 import Psettings from './passwordsettings/PSettingsSaga';
+import DashboardSaga from './dashboard/DashboardSaga';
+import WorkhourSaga from './workhour/WorkhourSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +21,7 @@ export default function* rootSaga() {
     AttractionSaga(),
     GallerySaga(),
     Psettings(),
+    DashboardSaga(),
+    WorkhourSaga(),
   ]);
 }

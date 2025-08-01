@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import ComponentCard from '../../components/ComponentCard';
 import { createAttraction, updateAttraction } from '../../store/attraction/AttractionSlice';
-import { listCategory, listSubcategory } from '../../store/category/CategorySlice';
+import { resetFunction, listCategory, listSubcategory } from '../../store/category/CategorySlice';
 import { StateContext } from '../../context/AppProvider';
 
 const uploadurl = `${process.env.REACT_APP_UPLOAD_URL}`;
@@ -34,36 +34,7 @@ const AttractionForm = ({ setPageType }) => {
   });
 
   useEffect(() => {
-    if (listSubData && listSubData.success === true) {
-      const data = listSubData.response.categories;
-      const subcatOptions = data.map((item) => ({
-        label: item.title, // <-- input values you are matching + item.title_ar
-        value: item.id,
-      }));
-      setSelectSubcatOptions(subcatOptions);
-    }
-
-    if (Object.keys(editData).length > 0) {
-      if (editData.subcategory_id) {
-        // const v = {
-        //   label: editData.subcategory.title, // <-- input values you are matching
-        //   value: editData.subcategory.id,
-        // };
-
-        if (listSubData && listSubData.success === true) {
-          const data = listSubData.response.categories;
-
-          const [v] = data
-            .filter((item) => item.id === editData.subcategory_id)
-            .map(({ id, title }) => ({ value: id, label: title })) || [{}];
-
-          setSubcatSelected(v);
-        }
-      }
-    }
-  }, [dispatch, listSubcategory]);
-
-  useEffect(() => {
+    dispatch(resetFunction());
     dispatch(listCategory());
   }, [dispatch]);
 
@@ -93,7 +64,39 @@ const AttractionForm = ({ setPageType }) => {
         }
       }
     }
-  }, [dispatch, listCategory]);
+  }, [dispatch, listData]);
+
+  useEffect(() => {
+    setSelectSubcatOptions([]);
+    if (listSubData && listSubData.success === true) {
+      const data = listSubData.response.categories;
+
+      const subcatOptions = data.map((item) => ({
+        label: item.title, // <-- input values you are matching + item.title_ar
+        value: item.id,
+      }));
+      setSelectSubcatOptions(subcatOptions);
+    }
+
+    if (Object.keys(editData).length > 0) {
+      if (editData.subcategory_id) {
+        // const v = {
+        //   label: editData.subcategory.title, // <-- input values you are matching
+        //   value: editData.subcategory.id,
+        // };
+
+        if (listSubData && listSubData.success === true) {
+          const data = listSubData.response.categories;
+
+          const [v] = data
+            .filter((item) => item.id === editData.subcategory_id)
+            .map(({ id, title }) => ({ value: id, label: title })) || [{}];
+
+          setSubcatSelected(v);
+        }
+      }
+    }
+  }, [dispatch, listSubData]);
 
   const handleCatChange = (val) => {
     setCatSelected(val);
@@ -105,16 +108,16 @@ const AttractionForm = ({ setPageType }) => {
     setSubcatSelected(val);
   };
 
-  useEffect(() => {
-    if (listSubData && listSubData.success === true) {
-      const data = listSubData.response.categories;
-      const subcatOptions = data.map((item) => ({
-        label: item.title, // <-- input values you are matching + item.title_ar
-        value: item.id,
-      }));
-      setSelectSubcatOptions(subcatOptions);
-    }
-  }, [dispatch, listSubcategory]);
+  // useEffect(() => {
+  //   if (listSubData && listSubData.success === true) {
+  //     const data = listSubData.response.categories;
+  //     const subcatOptions = data.map((item) => ({
+  //       label: item.title, // <-- input values you are matching + item.title_ar
+  //       value: item.id,
+  //     }));
+  //     setSelectSubcatOptions(subcatOptions);
+  //   }
+  // }, [dispatch, listSubcategory]);
 
   const {
     register,
@@ -145,7 +148,6 @@ const AttractionForm = ({ setPageType }) => {
       ...errorValidation,
     });
     const formData = new FormData();
-    console.log(catSelected);
 
     formData.append('title', data.title);
     formData.append('title_ar', data.title_ar);
@@ -163,6 +165,10 @@ const AttractionForm = ({ setPageType }) => {
       const payload = { attractionId: editData.id, data: formData };
       dispatch(updateAttraction(payload));
     }
+  };
+
+  const handleCancelButtonClick = () => {
+    setPageType('list');
   };
 
   return (
@@ -337,7 +343,11 @@ const AttractionForm = ({ setPageType }) => {
               <Button type="submit" className="btn btn-success">
                 Save
               </Button>
-              <Button type="button" className="btn btn-dark ml-2">
+              <Button
+                type="button"
+                className="btn btn-dark ml-2"
+                onClick={() => handleCancelButtonClick()}
+              >
                 Cancel
               </Button>
             </CardBody>

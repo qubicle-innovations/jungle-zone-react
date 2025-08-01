@@ -45,13 +45,17 @@ const SubadminForm = ({ setPageType }) => {
     formData.append('email', data.email);
     formData.append('password', data.password);
     formData.append('role', 'sub_admin');
-    
+
     if (Object.keys(editData).length === 0) {
       dispatch(createSubadmin(formData));
     } else {
       const payload = { subadminId: editData.id, data: formData };
       dispatch(updateSubadmin(payload));
     }
+  };
+
+  const handleCancelButtonClick = () => {
+    setPageType('list');
   };
 
   return (
@@ -142,7 +146,11 @@ const SubadminForm = ({ setPageType }) => {
               <Button type="submit" className="btn btn-success">
                 Save
               </Button>
-              <Button type="button" className="btn btn-dark ml-2">
+              <Button
+                type="button"
+                className="btn btn-dark ml-2"
+                onClick={() => handleCancelButtonClick()}
+              >
                 Cancel
               </Button>
             </CardBody>

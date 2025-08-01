@@ -20,8 +20,8 @@ const CouponForm = ({ setPageType }) => {
   const dispatch = useDispatch();
   const contData = useContext(StateContext);
   const editData = contData.couponEditData;
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(Object.keys(editData).length > 0 ? editData.start_date : '');
+  const [endDate, setEndDate] = useState(Object.keys(editData).length > 0 ? editData.end_date : '');
   const [errorValidation, setErrorValidation] = useState({
     startDate: 0,
     endDate: 0,
@@ -89,6 +89,10 @@ const CouponForm = ({ setPageType }) => {
       }
     }
   };
+
+   const handleCancelButtonClick=()=>{
+    setPageType("list");
+  }
 
   return (
     <Row>
@@ -272,7 +276,7 @@ const CouponForm = ({ setPageType }) => {
               <Button type="submit" className="btn btn-success">
                 Save
               </Button>
-              <Button type="button" className="btn btn-dark ml-2">
+              <Button type="button" className="btn btn-dark ml-2" onClick={()=>handleCancelButtonClick()}>
                 Cancel
               </Button>
             </CardBody>

@@ -66,6 +66,13 @@ const SidebarData = [
       },
     ],
   },
+  {
+    title: 'Working Hours',
+    href: '/workhours',
+    icon: <Icon.Clock />,
+    id: 7,
+    collapisble: false,
+  },
 ];
 
 export default SidebarData;

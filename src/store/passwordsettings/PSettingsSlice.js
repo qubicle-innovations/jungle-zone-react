@@ -5,33 +5,25 @@ export const psettingsSlice = createSlice({
   initialState: {
     isLoading: false,
     paramData: {},
-    changePasswordSuccess : {},
-    changePasswordError: {}
+    changePasswordStatus : {},
   },
   reducers: {
     changePassword: (state, action) => {
       state.isLoading = true;
-      state.changePasswordSuccess = {};
+      state.changePasswordStatus = {};
       state.paramData = action.payload;
     },
-    changePasswordSuccess: (state, action) => {
+    changePasswordAction: (state, action) => {
       state.isLoading = false;
-      state.changePasswordSuccess = action.payload;
-      state.changePasswordError = {};
-    },
-    changePasswordError: (state, action) => {
-      state.isLoading = false;
-      state.changePasswordSuccess = {};
-      state.changePasswordError = action.payload;
+      state.changePasswordStatus = action.payload;
     },
     resetData: (state) => {
-      state.changePasswordSuccess = {};
-      state.changePasswordError = {};
+      state.changePasswordStatus = {};
     },
   },
 });
 
-export const { changePassword, changePasswordSuccess, changePasswordError, resetData } =
+export const { changePassword, changePasswordAction, resetData } =
   psettingsSlice.actions;
 
 export default psettingsSlice.reducer;

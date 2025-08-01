@@ -49,7 +49,7 @@ const FullLayout = () => {
                 <Row>
                   <Col md="6">
                     <Breadcrumb>
-                      <BreadcrumbItem to="/" tag={Link} className="text-decoration-none">
+                      <BreadcrumbItem to="/home" tag={Link} className="text-decoration-none">
                         Home
                       </BreadcrumbItem>
                       {firstUrl ? <BreadcrumbItem active>{firstUrl}</BreadcrumbItem> : ''}

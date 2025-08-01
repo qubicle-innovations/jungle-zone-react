@@ -100,6 +100,10 @@ const CategoryForm = ({ setPageType }) => {
     }
   };
 
+  const handleCancelButtonClick = () => {
+    setPageType('list');
+  };
+
   return (
     <Row>
       <Col md="12">
@@ -260,7 +264,11 @@ const CategoryForm = ({ setPageType }) => {
               <Button type="submit" className="btn btn-success">
                 Save
               </Button>
-              <Button type="button" className="btn btn-dark ml-2">
+              <Button
+                type="button"
+                className="btn btn-dark ml-2"
+                onClick={() => handleCancelButtonClick()}
+              >
                 Cancel
               </Button>
             </CardBody>

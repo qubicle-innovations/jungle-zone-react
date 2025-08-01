@@ -15,6 +15,7 @@ axiosInstance.interceptors.request.use((config) => {
   const token = JSON.parse(detoken);
   const headers = {
     Authorization: `Bearer ${token}`,
+    'Accept': 'application/json',
     'Content-Type': 'multipart/form-data',
   };
   config.params = config.params || {};

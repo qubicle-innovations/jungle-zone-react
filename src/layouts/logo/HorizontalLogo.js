@@ -10,7 +10,7 @@ const HorizontalLogo = () => {
   const isDarkMode = useSelector((state) => state.customizer.isDark);
   const activetopbarBg = useSelector((state) => state.customizer.topbarBg);
   return (
-    <Link to="/" className="d-flex align-items-center gap-2">
+    <Link to="/home" className="d-flex align-items-center gap-2">
       {isDarkMode || activetopbarBg !== 'white' ? (
         <>
           <LogoWhiteIcon />

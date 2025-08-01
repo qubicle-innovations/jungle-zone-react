@@ -21,6 +21,7 @@ const Category = Loadable(lazy(() => import('../views/category')));
 const Subcategory = Loadable(lazy(() => import('../views/subcategory')));
 const Attraction = Loadable(lazy(() => import('../views/attraction')));
 const SettingsForm = Loadable(lazy(() => import('../views/settings')));
+const WorkHoursForm = Loadable(lazy(() => import('../views/workinghours')));
 
 const ThemeRoutes = [
   {
@@ -35,6 +36,7 @@ const ThemeRoutes = [
       { path: '/attraction/subcategory', name: 'Subcategory', exact: true, element: <Subcategory /> },
       { path: '/attraction', name: 'Attraction', exact: true, element: <Attraction /> },
       { path: '/settings', name: 'Settings', exact: true, element: <SettingsForm /> },
+      { path: '/workhours', name: 'WorkHours', exact: true, element: <WorkHoursForm /> },
     ],
   },
   {
